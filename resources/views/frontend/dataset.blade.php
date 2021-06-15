@@ -1,6 +1,6 @@
 @extends('frontend.master')
 @section('content')
-    <h4 class="mt-4 mb-4" style="margin-top: 100px;"><strong>Perangkat Daerah Kabupaten Ciamis</strong></h4>
+    <h5 class="mt-4 mb-4" style="margin-top: 100px;"><strong>Perangkat Daerah Kabupaten Ciamis</strong></h5>
     @if(Auth::user()->uptd_parent == '')
         @php 
             $nama_opd = request()->nama_opd;
@@ -29,26 +29,31 @@
             $check = $arr->contains(Auth::user()->uptd_parent);
         @endphp
     @endif
-    @foreach($opd as $val)
-    <div class="row">
-        <div class="col-md-12 border-bottom mb-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>{{ $val->nama_opd }}</h5>
-                </div>
-                <div class="col-md-6 d-flex d-flex justify-content-end mb-3">
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Nama OPD</th>
+                <th width="300" class="text-right">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach($opd as $val)
+            <tr> 
+                <td>
+                    {{ $val->nama_opd }} 
+                </td>
+                <td width="300" class="text-right">
                     @if($opd_file > 0 && $check != false)
                         <a href="{{ route('dataset.detail') }}?id={{ $val->id }}&perangkat={{ $type }}">
                             <button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i> Lihat File</button>
                         </a>
                     @endif
                     <a href="{{ route('dataset.upload') }}?id={{ $val->id }}&perangkat={{ $type }}">
-                        <button class="btn btn-success btn-sm ml-3"><i class="fa fa-upload" aria-hidden="true"></i> Upload File</button>
+                        <button class="btn btn-success btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> Upload File</button>
                     </a>
-                </div>
-            </div>
-            <!-- <p>Nama File</p> -->
-        </div>
-    </div>
-    @endforeach
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection

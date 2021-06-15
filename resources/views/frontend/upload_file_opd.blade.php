@@ -30,7 +30,7 @@
         <div class="col-md-5">
             <div class="form-group">
                 <label class="bmd-label-floating">Nama Perangkat Daerah</label>
-                <select name="nama_opd" class="form-control">
+                <select name="nama_opd" class="form-control" disabled>
                     <option value="">Pilih Opd</option>
                     @php 
                     $opd = \App\Models\Opd::all();

@@ -35,20 +35,31 @@ class OpdController extends Controller
     }
     public function store(Request $request)
     {
-        if ($request["id_opd"]) {
-            $obj = new \App\Models\Uptd();
-            $obj->opd_id = $request["id_opd"];
-            $obj->nama_uptd = $request["uptd"];
-            $obj->save();
-        } else {
+        if ($request["type"] == 'staff') {
             if ($request["id"]) {
-                $data = \App\Models\Opd::find($request["id"]);
+                $data = \App\Models\Uptd::find($request["id"]);
             } else {
-                $data = new \App\Models\Opd;
+                $data = new \App\Models\Uptd;
             }
-            $data->nama_opd = $request["nama"];
-            $data->alias_opd = $request["alias_opd"];
+            $data->opd_id = $request["uptd_opd_id"];
+            $data->nama_uptd = $request["nama"];
             $data->save();
+        } else {
+            if ($request["id_opd"]) {
+                $obj = new \App\Models\Uptd();
+                $obj->opd_id = $request["id_opd"];
+                $obj->nama_uptd = $request["uptd"];
+                $obj->save();
+            } else {
+                if ($request["id"]) {
+                    $data = \App\Models\Opd::find($request["id"]);
+                } else {
+                    $data = new \App\Models\Opd;
+                }
+                $data->nama_opd = $request["nama"];
+                $data->alias_opd = $request["alias_opd"];
+                $data->save();
+            }
         }
         return redirect(route('opd.index'));
     }
@@ -89,10 +100,10 @@ class OpdController extends Controller
             $data = \App\Models\Opd::all();
         }
         return Datatables::of($data)
-            ->addColumn('nama_opd', function($val){
+            ->addColumn('nama_opd', function ($val) {
                 if (!$val->get_file->isEmpty()) {
-                    return '<a role="presentation" href=' . route('opd.file') . '?id=' . $val->id . '>' . $val->nama_opd .'</a>';
-                }else{
+                    return '<a role="presentation" href=' . route('opd.file') . '?id=' . $val->id . '>' . $val->nama_opd . '</a>';
+                } else {
                     return $val->nama_opd;
                 }
             })
@@ -125,7 +136,7 @@ class OpdController extends Controller
                             </div>
                         </div>';
             })
-            ->rawColumns(['aksi', 'status_file','nama_opd'])
+            ->rawColumns(['aksi', 'status_file', 'nama_opd'])
             ->make(true);
     }
 
@@ -134,11 +145,12 @@ class OpdController extends Controller
         $data = \App\Models\Uptd::where('opd_id', $request["id"])->get();
         return Datatables::of($data)
             ->addColumn('aksi', function ($val) {
+                $edit = '<a class="dropdown-item" role="presentation" href=' . route('opd.form') . '?id=' . $val->id . '&type=staff>Edit</a>';
                 return '<div class="dropdown">
                             <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href=' . route('opd.file') . '?id=' . $val->opd_id . '>Kelola File</a>
-                                <a class="dropdown-item" role="presentation" href=' . route('opd.form') . '?id=' . $val->id . '>Edit</a>
+                                <a class="dropdown-item" role="presentation" href=' . route('opdfile.form') . '?id=' . $val->opd_id . '&type=staff>Kelola File</a>
+                                ' . $edit . '
                                 <a class="dropdown-item delete-parent" role="presentation" href="javascript:void(0)" data-bind=' . $val->id . '>Delete</a>
                             </div>
                         </div>';

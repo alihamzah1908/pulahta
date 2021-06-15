@@ -14,55 +14,54 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template -->
     <link href="{{ asset('frontend/css/navbar-top-fixed.css') }}" rel="stylesheet">
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-3">
-        <div class='container'>
-            <img src="{{ asset('frontend/img/logo-diskominfo.png') }}" style="width: 3rem;">
-            <a class="navbar-brand ml-3" href="javascript:void(0)"><p>DAFTAR PERMINTAAN DATA</p></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Indikator
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item">Logout</a>
-                    </div>
-                    </li> -->
-                </ul>
-                <!-- <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn my-2 my-sm-0" type="submit"><strong>Search</strong></button>
-                </form> -->
-                <a href="{{ route('dataset') }}">
-                    <button class="btn btn-link border text-white my-2 my-sm-0">Perangkat Daerah</button>
-                </a>
-                <a href="{{ route('statistik') }}" class="ml-3">
-                    <button class="btn btn-link border text-white my-2 my-sm-0">Statistik</button>
-                </a>
-                <a class="ml-3" href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <button class="btn btn-link border text-white my-2 my-sm-0"> {{ __('Logout') }}</button>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark p-3">
+        <div class="row col-lg-12">
+            <div class="col-md-6 d-flex justify-content-start">
+                <img src="{{ asset('frontend/img/logo-diskominfo.png') }}" style="width: 3.5rem;">
+                <a class="navbar-brand ml-3" href="javascript:void(0)"><p>DAFTAR PERMINTAAN DATA</p></a>
+            </div>
+            <div class="col-md-5 ml-1 mt-2">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mr-3">
+                            <a href="{{ route('dataset') }}" class="text-white">
+                                <i class="fa fa-building-o" aria-hidden="true"></i> Perangkat Daerah
+                            </a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a href="{{ route('statistik') }}" class="text-white">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i> Statistik
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('logout') }}" class="text-white"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
-    <main role="main" class="container" style="margin-top: 55px;">
+    <main role="main" class="container" style="margin-top: 100px;">
         <div class="ml-0">
             <form class="form-inline mt-2 mt-md-0" action="{{ route('dataset') }}" method="get">
                 <input class="form-control mr-sm-2 col-md-11" name="nama_opd" style="border-radius: 9px;padding:10px;" type="text" placeholder="cari perangkat daerah" aria-label="Cari perangkat daerah" value="{{ request()->nama_opd }}">
-                <button class="btn my-2 my-sm-0" style="border-radius: 9px;padding:10px;" type="submit"><strong>Cari</strong></button>
+                <button class="btn my-2 my-sm-0" style="border-radius: 9px;padding:10px;" type="submit"><strong><i class="fa fa-search" aria-hidden="true"></i> Cari</strong></button>
             </form>
         </div>
         <!-- <div class="jumbotron"> -->

@@ -56,7 +56,8 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">ANALYTICS</div>
                             <a class="nav-link {{ request()->getName == 'admin' ? ' active' : '' }}" href="{{ route('dashboard') }}"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                ><div class="sb-nav-link-icon"><i class="fa fa-tachometer" aria-hidden="true"></i>
+                            </div>
                                 Dashboard</a
                             >
                             <div class="sb-sidenav-menu-heading">DATA</div>

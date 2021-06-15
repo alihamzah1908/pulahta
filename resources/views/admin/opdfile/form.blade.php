@@ -25,8 +25,9 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
+                            <input type="hidden" name="nama_opd" value="{{ request()->id }}" />
                             <label class="bmd-label-floating"><strong>Nama OPD</strong></label>
-                            <select name="nama_opd" class="form-control">
+                            <select name="nama_opd" class="form-control" disabled>
                                 <option value="">Pilih Opd</option>
                                 @php 
                                 $opd = \App\Models\Opd::all();
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                @if(Auth::user()->role == 'Admin')
+                @if(Auth::user()->role == 'Admin' && request()->type != 'staff')
                 <div class="row">
                     <div class="col-md-5">
                         <label class="bmd-label-floating"><strong>Nama Uptd </strong></label>

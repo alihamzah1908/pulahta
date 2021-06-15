@@ -47,9 +47,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Total Upload</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 text-primary total-upload">{{ \App\Models\OpdFile::count() }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::count() }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fa fa-upload fa-2x text-primary" aria-hidden="true"></i>
@@ -63,9 +63,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Total File</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 text-success total-file">{{ \App\Models\OpdFile::count() }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-file">{{ \App\Models\OpdFile::count() }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fa fa-file fa-2x text-success" aria-hidden="true"></i>
@@ -79,9 +79,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Total Download</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 text-danger total-download">{{ \App\Models\OpdFile::select('total_download')->pluck('total_download')->sum() }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-download">{{ \App\Models\OpdFile::select('total_download')->pluck('total_download')->sum() }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fa fa-download fa-2x text-danger" aria-hidden="true"></i>
