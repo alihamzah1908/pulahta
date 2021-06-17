@@ -62,7 +62,7 @@
                     }
                 },
                 columns: [
-                    { title: 'Nama Uptd', data: 'nama_uptd' },
+                    { title: 'Nama User OPD', data: 'nama_uptd' },
                     { title: 'Aksi', data: 'aksi' },
                 ],
                 select: false,

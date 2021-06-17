@@ -10,6 +10,7 @@
             $nama = \App\Models\Uptd::select('nama_uptd as nama_opd','id','opd_id')->where('id', request()->id)->first();
             $opd_file = \App\Models\OpdFile::where('opd_id', $nama->opd_id)
             ->where('file_to_uptd', Auth::user()->uptd_parent)
+            ->orderBy('id','desc')
             ->get();
 
             $check_file_uptd = \App\Models\OpdFile::where('opd_id', $nama->opd_id)->get();
@@ -46,7 +47,8 @@
                         <th scope="col">Nama Dataset</th>
                         <th scope="col">File</th>
                         <th scope="col">Diupload Oleh</th>
-                        <th scope="col">Diupload Pada Tanggal</th>
+                        <th scope="col">File Diupload Untuk</th>
+                        <!-- <th scope="col">Diupload Pada Tanggal</th> -->
                         <th scope="col">Download File</th>
                     </tr>
                 </thead>
@@ -59,7 +61,8 @@
                                     <i class="fa fa-file" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <td>{{ $val->get_user ? $val->get_user->name : '' }}</td>
+                            <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->upload_by_opd->nama_opd }}</td>
+                            <!-- <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd}}</td> -->
                             <td>{{ date('d M Y H:i', strtotime($val->created_at)) }}</td>
                             <td>
                                 <a href="{{ route('opdfile.download') }}?id={{$val->id}}&file={{ $val->file }}">

@@ -64,8 +64,9 @@
     </div>
     <div class="row pull-right">
         <div class="col-md-5">
-            <input type="hidden" name="opd_id" value="{{ request()->id }}" />
+            <input type="hidden" name="opd_id" value="{{ $nama->opd_id }}" />
             <input type="hidden" name="file_to_uptd" value="{{ $nama->id }}" />
+            <input type="hidden" name="upload_file_by" value="{{ request()->id }}" />
             <input type="hidden" name="uptd_id" value="{{ Auth::user()->uptd_parent }}" />
             <button type="submit" class="btn btn-primary pull-right">Simpan</button>
             <div class="clearfix"></div>

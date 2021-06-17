@@ -50,6 +50,7 @@ class OpdFileController extends Controller
                 $data->created_by = Auth::user()->id;
                 $data->file = $new_name;
                 $data->file_to_uptd = $val;
+                $data->upload_file_by = $request["upload_file_by"];
                 $data->save();
             }
         }else{
@@ -63,6 +64,7 @@ class OpdFileController extends Controller
                 $new_name = $realname . "-" . time() . "." . $extension;
                 $file->move(public_path('uploads'), $new_name);
                 $data->file = $new_name;
+                $data->upload_file_by = $request["upload_file_by"];
             //    $data->file_to_uptd = implode(',', $request["file_to_uptd"]);
             //    $data->uptd_id = implode(',', $request["file_to_uptd"]);
             }
@@ -86,7 +88,7 @@ class OpdFileController extends Controller
     public function upload_file(Request $request){
         $data = new \App\Models\OpdFile;
         $data->judul = $request["judul"];
-        $data->opd_id = $request["nama_opd"];
+        $data->opd_id = $request["opd_id"];
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $realname = $file->getClientOriginalName();
@@ -95,11 +97,11 @@ class OpdFileController extends Controller
             $file->move(public_path('uploads'), $new_name);
             $data->file = $new_name;
             $data->file_to_uptd = $request["file_to_uptd"];
-            $data->uptd_id = $request["uptd_id"];
         }
         $data->created_by = Auth::user()->id;
+        $data->upload_file_by = $request["upload_file_by"];
         $data->save();
-        return redirect(route('dataset.detail', ['id' => $request["opd_id"]]));
+        return redirect(route('dataset.detail', ['id' => $request["upload_file_by"]]));
     }
 
     /**

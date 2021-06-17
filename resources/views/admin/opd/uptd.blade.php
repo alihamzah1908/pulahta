@@ -5,16 +5,11 @@
         @php 
         $opd = \App\Models\Opd::find(request()->id);
         @endphp
-        <h3 class="mt-4 mb-3">Form Edit UPTD</h3>
-    @else 
-        @php 
-        $opd = '';
-        @endphp
-        <h3 class="mt-4 mb-3">Form Tambah UPTD</h3>
+        <h3 class="mt-4 mb-3">Form Tambah User OPD</h3>
     @endif
     <ol class="breadcrumb mb-4 mt-4">
         <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
-        <li class="breadcrumb-item active">Tambah Uptd</li>
+        <li class="breadcrumb-item active">Tambah User OPD</li>
     </ol>
     <div class="card">
         <div class="card-header card-header-primary">
@@ -35,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="bmd-label-floating">Nama UPTD</label>
+                            <label class="bmd-label-floating">Nama User OPD</label>
                             <input type="text" class="form-control" name="uptd" value="" required>
                         </div>
                     </div>

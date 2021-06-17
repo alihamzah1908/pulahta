@@ -122,16 +122,19 @@ class OpdController extends Controller
             })
             ->addColumn('aksi', function ($val) {
                 if (Auth::user()->role == 'super admin') {
+                    $edit = '
+                    <a class="dropdown-item" role="presentation" href=' . route('opd.form') . '?id=' . $val->id . '>Edit</a>';
                     $delete = '<a class="dropdown-item delete" role="presentation" href="javascript:void(0)" data-bind="{{ $val->id }}">Delete</a>';
                 } else {
+                    $edit = '';
                     $delete = '';
                 }
                 return '<div class="dropdown d-flex justify-content-end">
                             <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href=' . route('opd.uptd') . '?id=' . $val->id . '>Tambah Uptd</a>
+                                <a class="dropdown-item" role="presentation" href=' . route('opd.uptd') . '?id=' . $val->id . '>Tambah User OPD</a>
                                 <a class="dropdown-item" role="presentation" href=' . route('opd.file') . '?id=' . $val->id . '>Kelola File</a>
-                                <a class="dropdown-item" role="presentation" href=' . route('opd.form') . '?id=' . $val->id . '>Edit</a>
+                                ' . $edit . '
                                 ' . $delete . '
                             </div>
                         </div>';
@@ -149,7 +152,7 @@ class OpdController extends Controller
                 return '<div class="dropdown">
                             <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href=' . route('opdfile.form') . '?id=' . $val->opd_id . '&type=staff>Kelola File</a>
+                                <a class="dropdown-item" role="presentation" href=' . route('opdfile.form') . '?id=' . $val->opd_id . '&type=staff&uptd_id=' . $val->id . '>Kelola File</a>
                                 ' . $edit . '
                                 <a class="dropdown-item delete-parent" role="presentation" href="javascript:void(0)" data-bind=' . $val->id . '>Delete</a>
                             </div>

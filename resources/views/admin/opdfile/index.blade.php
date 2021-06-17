@@ -24,7 +24,7 @@
                     <th>Nama Perangkat</th>
                     <th>File</th>
                     <th>Diupload Oleh</th>
-                    <!-- <th>File Diupload Untuk</th> -->
+                    <th>File Diupload Untuk</th>
                     <th>Dibuat Pada</th>
                     <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
@@ -42,8 +42,8 @@
                                 <i class="fa fa-file" aria-hidden="true"></i>
                             </a>
                         </td>
-                        <td>{{ $val->get_user ? $val->get_user->name : '' }}</td>
-                        <!-- <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : ''}}</td> -->
+                        <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->upload_by_opd->nama_opd }}</td>
+                        <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val->created_at)) }}</td>
                         <td class="d-flex justify-content-end">
                             <div class="dropdown">

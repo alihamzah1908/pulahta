@@ -99,7 +99,7 @@
                                 @php
                                 $opd = \App\Models\Opd::all();
                                 @endphp
-                                <select name="opd_parent" class="form-control" id="opd_parent" required>
+                                <select name="opd_parent" class="form-control" id="opd_parent" {{Auth::user()->role != 'super admin' ? ' disabled' : ''}} required>
                                     <option value="">Pilih</option>
                                     @foreach($opd as $val)
                                         <option value="{{ $val->id }}">{{ $val->nama_opd }}</option>
@@ -112,7 +112,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label>UPTD Parent Opd</label>
-                                <select name="uptd_parent" class="form-control" id="uptd_parent_select">
+                                <select name="uptd_parent" class="form-control" id="uptd_parent_select" {{Auth::user()->role != 'super admin' ? ' disabled' : ''}}>
                                     <option value="">Pilih</option>
                                 </select>
                             </div>
@@ -385,7 +385,9 @@
                 if(response.length > 0 && data.role != 'Admin'){
                     $("#uptd_parent").show()
                     $.each(response, function(index, value){
-                        $("#uptd_parent_select").append('<option value=' + value.id + '>' + value.nama_uptd + '</option>');
+                        console.log(value.id + ' ' + data.opd_parent)
+                        var selected = value.id == data.uptd_parent ? ' selected' : ''
+                        $("#uptd_parent_select").append('<option value=' + value.id + '' + selected + '>' + value.nama_uptd + '</option>');
                     })
                 }else{
                     $("#uptd_parent").hide()
