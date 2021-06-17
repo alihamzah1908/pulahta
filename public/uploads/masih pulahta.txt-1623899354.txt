@@ -1,0 +1,4 @@
+- halaman utama apakah tidak terlalu panjang?
+- ngga ada tulisan created by diskominfo?
+- dimenu statistik bisa ngga yang munculnya hanya uptd di dinas tersebut
+- nama OPD pada halaman utama

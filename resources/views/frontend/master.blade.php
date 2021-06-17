@@ -8,8 +8,8 @@
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title>Data Set Opd Kabupaten Ciamis</title>
-    
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/icon.png') }}" />  
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/icon.png') }}" />
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/navbar-top-fixed/">
 
     <!-- Bootstrap core CSS -->
@@ -57,7 +57,7 @@
             </div>
         </div>
     </nav>
-    <main role="main" class="container" style="margin-top: 100px;">
+    <main role="main" class="container" style="margin-top: 100px;margin-bottom:100%;">
         <div class="ml-0">
             <form class="form-inline mt-2 mt-md-0" action="{{ route('dataset') }}" method="get">
                 <input class="form-control mr-sm-2 col-md-11" name="nama_opd" style="border-radius: 9px;padding:10px;" type="text" placeholder="cari perangkat daerah" aria-label="Cari perangkat daerah" value="{{ request()->nama_opd }}">
@@ -69,7 +69,11 @@
             @yield('content')
         <!-- </div> -->
     </main>
-
+    <footer class="bg-dark text-center text-lg-start">
+        <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Diskominfo Ciamis</a>
+        </div>
+    </footer>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -15,7 +15,8 @@
         @php 
             $nama_opd = request()->nama_opd;
             $type = 'uptd';
-            $opd = \App\Models\Uptd::select('nama_uptd as nama_opd','id','opd_id')->orderBy('nama_uptd','asc')
+            $opd = \App\Models\Uptd::select('nama_uptd as nama_opd','id','opd_id')
+                ->orderBy('nama_uptd','asc')
                 ->where('nama_uptd', 'LIKE', "%{$nama_opd}%") 
                 ->where('id', Auth::user()->uptd_parent)
                 ->get();
@@ -33,15 +34,15 @@
         <thead>
             <tr>
                 <th>Nama OPD</th>
+                <th>Nama User OPD</th>
                 <th width="300" class="text-right">Aksi</th>
             </tr>
         </thead>
         <tbody>
         @foreach($opd as $val)
             <tr> 
-                <td>
-                    {{ $val->nama_opd }} 
-                </td>
+                <td>{{ $val->get_opd->nama_opd }}</td>
+                <td>{{ $val->nama_opd }}</td>
                 <td width="300" class="text-right">
                     @if($opd_file > 0 && $check != false)
                         <a href="{{ route('dataset.detail') }}?id={{ $val->id }}&perangkat={{ $type }}">

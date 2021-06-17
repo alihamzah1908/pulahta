@@ -42,7 +42,7 @@
                                 <i class="fa fa-file" aria-hidden="true"></i>
                             </a>
                         </td>
-                        <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->upload_by_opd->nama_opd }}</td>
+                        <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->get_opd->nama_opd }}</td>
                         <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val->created_at)) }}</td>
                         <td class="d-flex justify-content-end">
@@ -81,7 +81,6 @@
                     var id = $(this).attr('data-bind');
                     var file = $(this).attr('data-file');
                     var token = $("meta[name='csrf-token']").attr("content");
-                    console.log(token)
                     $.ajax({
                         dataType: 'json',
                         method: 'DELETE',

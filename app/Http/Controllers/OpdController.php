@@ -152,7 +152,6 @@ class OpdController extends Controller
                 return '<div class="dropdown">
                             <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href=' . route('opdfile.form') . '?id=' . $val->opd_id . '&type=staff&uptd_id=' . $val->id . '>Kelola File</a>
                                 ' . $edit . '
                                 <a class="dropdown-item delete-parent" role="presentation" href="javascript:void(0)" data-bind=' . $val->id . '>Delete</a>
                             </div>

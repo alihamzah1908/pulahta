@@ -14,4 +14,9 @@ class Uptd extends Model
     {
         return $this->hasMany('\App\Models\OpdFile', 'opd_id', 'id');
     }
+
+    public function get_opd()
+    {
+        return $this->belongsTo('\App\Models\Opd', 'opd_id', 'id');
+    }
 }
