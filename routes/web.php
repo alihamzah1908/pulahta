@@ -51,6 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/ubah_password', function(){
         return view('user.ubah_password');
     })->name('ubah.password');
+    Route::get('/admin/opd/metadata', function(){
+        return view('admin.opdfile.metadata');
+    })->name('file.metadata');
     Route::post('/user/proses_ubah_password','App\Http\Controllers\UserController@proses_ubah_password')->name('proses.ubah_password');
     Route::get('/admin/opd/datatable_opd', 'App\Http\Controllers\OpdController@datatable')->name('opd.data');
     Route::get('/admin/opd/datatable_opd_parent', 'App\Http\Controllers\OpdController@datatable_opd_parent')->name('opd_parent.data');
@@ -69,6 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
    
     Route::post('/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
     Route::post('/dataset/upload_file', 'App\Http\Controllers\OpdFileController@upload_file')->name('upload.file');
+    Route::post('/dataset/upload_metadata', 'App\Http\Controllers\OpdFileController@upload_metadata')->name('upload.metadata');
+    Route::post('/dataset/update_status', 'App\Http\Controllers\OpdFileController@update_status')->name('file.update_status');
     Route::delete('/admin/opd/delete','App\Http\Controllers\OpdFileController@destroy')->name('opd.delete');
     Route::delete('/admin/opd_file/delete','App\Http\Controllers\OpdFileController@file_delete')->name('opd_file.delete');
 

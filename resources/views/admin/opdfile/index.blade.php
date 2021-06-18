@@ -25,6 +25,7 @@
                     <th>File</th>
                     <th>Diupload Oleh</th>
                     <th>File Diupload Untuk</th>
+                    <th>Status File</th>
                     <th>Dibuat Pada</th>
                     <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
@@ -44,11 +45,28 @@
                         </td>
                         <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->get_opd->nama_opd }}</td>
                         <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd}}</td>
+                        <td>
+                            @if($val->status_file == 'asli')
+                                <span class="badge badge-primary">{{ $val->status_file }}</span>
+                            @elseif($val->status_file == 'verifikasi')
+                                <span class="badge badge-warning">{{ $val->status_file }}</span>
+                            @else 
+                                <span class="badge badge-success">{{ $val->status_file }}</span>
+                            @endif
+                        </td>
                         <td>{{ date('d M Y H:i', strtotime($val->created_at)) }}</td>
                         <td class="d-flex justify-content-end">
                             <div class="dropdown">
                                 <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                                 <div class="dropdown-menu" role="menu">
+                                    @if(Auth::user()->role == 'super admin')
+                                    <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Tambah Kamus Data</a>
+                                        @if($val->status_file == 'asli')
+                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="verifikasi">Ubah Status File</a>
+                                        @elseif($val->status_file == 'verifikasi')
+                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="publikasi">Ubah Status File</a>
+                                        @endif
+                                    @endif
                                     <a class="dropdown-item delete" role="presentation" href="javascript:void(0)" data-bind="{{ $val->id }}" data-file="{{ $val->file }}">Delete</a>
                                     <a class="dropdown-item" role="presentation" href="{{ route('opdfile.download') }}?id={{$val->id}}&file={{ $val->file }}">Download</a>
                                 </div>
@@ -94,6 +112,44 @@
                         Swal.fire(
                             'Terhapus!',
                             'Data sudah terhapus.',
+                            'success'
+                        ).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload()
+                            }
+                        })
+                    })
+                }
+            })
+        })
+
+        $('body').on('click', '.ubah_status', function(){
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, ubah data!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var status = $(this).attr('data-bind');
+                    var id = $(this).attr('data-id');
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    $.ajax({
+                        dataType: 'json',
+                        method: 'post',
+                        url: '{{ route("file.update_status") }}',
+                        data: {
+                            "id": id,
+                            "status" : status,
+                            "_token" : token,
+                        }
+                    }).done(function(){
+                        Swal.fire(
+                            'Terubah!',
+                            'File status sudah terubah.',
                             'success'
                         ).then((result) => {
                             if (result.isConfirmed) {

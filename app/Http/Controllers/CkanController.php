@@ -51,7 +51,9 @@ class CkanController extends Controller
                         ])->post('http://data.ciamiskab.go.id/api/3/action/resource_create', [
                             "package_id" => Str::kebab($file->judul),
                             // "url" =>  "https://raw.githubusercontent.com/frictionlessdata/test-data/master/files/csv/100kb.csv",
-                            "description" => "$file->judul" ,
+                           
+                           
+                            "description" => "$file->judul" , // coba ganti dengan $file->keterangan
                             "name" => "$file->judul",
                             // "upload" => fopen(public_path('uploads/' . $file->file), 'r')
                         ]);
@@ -72,7 +74,7 @@ class CkanController extends Controller
                     ])->post('http://data.ciamiskab.go.id/api/3/action/package_create', [
                         "name" => Str::kebab($file->judul),
                         "title" => $file->judul,
-                        "description" => "description",
+                        "description" => "description", // coba ganti dengan $file->keterangan
                         "owner_org" => $org,
                     ]);
                     $resp = json_decode($dataset_create->body(), true);

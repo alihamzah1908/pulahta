@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Zip;
-use Auth;
 
 class OpdFileController extends Controller
 {
@@ -37,13 +37,13 @@ class OpdFileController extends Controller
      */
     public function store(Request $request)
     {
-        if($request["file_to_uptd"]){
+        if ($request["file_to_uptd"]) {
             $file = $request->file('file');
             $realname = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $new_name = $realname . "-" . time() . "." . $extension;
             $file->move(public_path('uploads'), $new_name);
-            foreach($request["file_to_uptd"] as $val){
+            foreach ($request["file_to_uptd"] as $val) {
                 $data = new \App\Models\OpdFile;
                 $data->judul = $request["judul"];
                 $data->opd_id = $request["nama_opd"];
@@ -51,9 +51,10 @@ class OpdFileController extends Controller
                 $data->file = $new_name;
                 $data->file_to_uptd = $val;
                 $data->upload_file_by = $request["upload_file_by"];
+                $data->status_file = $request["asli"];
                 $data->save();
             }
-        }else{
+        } else {
             $data = new \App\Models\OpdFile;
             $data->judul = $request["judul"];
             $data->opd_id = $request["nama_opd"];
@@ -65,9 +66,10 @@ class OpdFileController extends Controller
                 $file->move(public_path('uploads'), $new_name);
                 $data->file = $new_name;
                 $data->upload_file_by = $request["upload_file_by"];
-            //    $data->file_to_uptd = implode(',', $request["file_to_uptd"]);
-            //    $data->uptd_id = implode(',', $request["file_to_uptd"]);
+                //    $data->file_to_uptd = implode(',', $request["file_to_uptd"]);
+                //    $data->uptd_id = implode(',', $request["file_to_uptd"]);
             }
+            $data->status_file = $request["asli"];
             $data->created_by = Auth::user()->id;
             $data->save();
         }
@@ -85,7 +87,8 @@ class OpdFileController extends Controller
         return redirect(route('opd.file', ['id' => $request["nama_opd"]]));
     }
 
-    public function upload_file(Request $request){
+    public function upload_file(Request $request)
+    {
         $data = new \App\Models\OpdFile;
         $data->judul = $request["judul"];
         $data->opd_id = $request["opd_id"];
@@ -98,10 +101,32 @@ class OpdFileController extends Controller
             $data->file = $new_name;
             $data->file_to_uptd = $request["file_to_uptd"];
         }
+        $data->status_file = $request["asli"];
         $data->created_by = Auth::user()->id;
         $data->upload_file_by = $request["upload_file_by"];
         $data->save();
         return redirect(route('dataset.detail', ['id' => $request["upload_file_by"]]));
+    }
+
+    public function upload_metadata(Request $request)
+    {
+        foreach ($request["tipe"] as $key => $val) {
+            $obj = new \App\Models\KamusData();
+            $obj->opd_file_id = $request["file_id"];
+            $obj->tipe = $val;
+            $obj->label = $request["label"][$key];
+            $obj->kegunaan = $request["keterangan"][$key];
+            $obj->save();
+        }
+        return redirect(route('file.metadata', ['id' => $request["file_id"]));
+    }
+
+    public function update_status(Request $request)
+    {
+        $obj = \App\Models\OpdFile::find($request["id"]);
+        $obj->status_file = $request["status"];
+        $obj->save();
+        return response()->json(["success" => 'true']);
     }
 
     /**
@@ -163,7 +188,7 @@ class OpdFileController extends Controller
 
     public function get_download(Request $request)
     {
-        $file = public_path() . "/uploads/". $request["file"];
+        $file = public_path() . "/uploads/" . $request["file"];
         $headers = array(
             'Content-Type: application/xlsx',
             'Content-Type: application/xls',
@@ -176,7 +201,8 @@ class OpdFileController extends Controller
         return Response::download($file, $request["file"], $headers);
     }
 
-    public function download_all(Request $request){
+    public function download_all(Request $request)
+    {
         $zip = Zip::create('file.zip');
         return $zip;
         // $files = \App\Models\OpdFile::where('opd_id', $request["id"])->get();
