@@ -118,7 +118,7 @@ class OpdFileController extends Controller
             $obj->kegunaan = $request["keterangan"][$key];
             $obj->save();
         }
-        return redirect(route('file.metadata', ['id' => $request["file_id"]));
+        return redirect(route('file.metadata', ['id' => $request["file_id"]]));
     }
 
     public function update_status(Request $request)
