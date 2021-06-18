@@ -71,4 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dataset/upload_file', 'App\Http\Controllers\OpdFileController@upload_file')->name('upload.file');
     Route::delete('/admin/opd/delete','App\Http\Controllers\OpdFileController@destroy')->name('opd.delete');
     Route::delete('/admin/opd_file/delete','App\Http\Controllers\OpdFileController@file_delete')->name('opd_file.delete');
+
+    Route::get('/admin/api', 'App\Http\Controllers\CkanController@index')->name('api.index');
+    Route::get('/admin/api/sinkronisasi', 'App\Http\Controllers\CkanController@sinkronisasi')->name('api.sikronisasi');
 });

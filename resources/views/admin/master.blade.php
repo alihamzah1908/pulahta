@@ -70,6 +70,7 @@
                                 <nav class="sb-sidenav-menu-nested nav"> -->
                                     <a class="nav-link" href="{{ route('opd.index') }}"><i class="fa fa-building" aria-hidden="true"></i>&nbsp; Perangkat Daerah</a>
                                     <a class="nav-link" href="{{ route('user.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen User</a>
+                                    <a class="nav-link" href="{{ route('api.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen API</a>
                                     <!-- <a class="nav-link" href="{{ route('opd.file') }}">OPD File</a> -->
                                 <!-- </nav>
                             </div> -->
