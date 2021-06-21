@@ -79,4 +79,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/admin/api', 'App\Http\Controllers\CkanController@index')->name('api.index');
     Route::get('/admin/api/sinkronisasi', 'App\Http\Controllers\CkanController@sinkronisasi')->name('api.sikronisasi');
+    Route::get('/admin/api/datatable', 'App\Http\Controllers\CkanController@datatable')->name('api.data');
 });

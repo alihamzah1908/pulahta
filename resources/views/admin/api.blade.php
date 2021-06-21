@@ -9,7 +9,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Total Upload</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::count() }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::where('status_file', 'publikasi')->count() }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fa fa-upload fa-2x text-primary" aria-hidden="true"></i>
@@ -77,3 +77,30 @@
     </table>
 </div>
 @endsection 
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        var url = '{{ route("api.data") }}';
+        var table = $('#dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            columns: [
+                { data: "id"},
+                { data: "created_at"},
+                { data: "jumlah_data"},
+                { data: "status"},
+                { data: "keterangan" },
+            ],
+            "order": [[0, 'desc']],
+             createdRow: function (row, data, index) {
+                var td = $(row).find("td:first");
+                if(data.total_parent == 0){
+                    td.removeClass('details-control');
+                }
+             }
+        });
+        console.log(table);
+    })
+</script>
+@endpush

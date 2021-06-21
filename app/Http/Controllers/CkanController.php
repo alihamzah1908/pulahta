@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use DataTables;
 
 
 class CkanController extends Controller
@@ -12,19 +13,18 @@ class CkanController extends Controller
     //
     public function index()
     {
-        return view('admin.api');
+        $data = \App\Models\CkanApi::all();
+        return view('admin.api', $data);
     }
 
     public function sinkronisasi()
     {
-        $files = \App\Models\OpdFile::all();
+        $files = \App\Models\OpdFile::where('status_file', 'publikasi')->get();
         $file_count = 0;
         // dd($files);
         
         foreach($files as $file)
         {
-            // $endpoint = "http://data.ciamiskab.go.id/api/3/action/organization_list";
-            // $client = new \GuzzleHttp\Client();
             $response = Http::get('http://data.ciamiskab.go.id/api/3/action/organization_list');
             $org_list = json_decode($response->body(), true);
             // dd($org_list);
@@ -50,12 +50,8 @@ class CkanController extends Controller
                             'Authorization' => config('ckanapi.private_key')
                         ])->post('http://data.ciamiskab.go.id/api/3/action/resource_create', [
                             "package_id" => Str::kebab($file->judul),
-                            // "url" =>  "https://raw.githubusercontent.com/frictionlessdata/test-data/master/files/csv/100kb.csv",
-                           
-                           
-                            "description" => "$file->judul" , // coba ganti dengan $file->keterangan
-                            "name" => "$file->judul",
-                            // "upload" => fopen(public_path('uploads/' . $file->file), 'r')
+                            "description" => $file->keterangan , // coba ganti dengan $file->keterangan
+                            "name" => $file->judul,
                         ]);
                         // $resp = json_decode($resource_create->body(), true);
                         // dd(public_path('uploads/'. $file->file));
@@ -74,7 +70,7 @@ class CkanController extends Controller
                     ])->post('http://data.ciamiskab.go.id/api/3/action/package_create', [
                         "name" => Str::kebab($file->judul),
                         "title" => $file->judul,
-                        "description" => "description", // coba ganti dengan $file->keterangan
+                        "notes" => $file->keterangan, // coba ganti dengan $file->keterangan
                         "owner_org" => $org,
                     ]);
                     $resp = json_decode($dataset_create->body(), true);
@@ -88,9 +84,8 @@ class CkanController extends Controller
                         ])->post('http://data.ciamiskab.go.id/api/3/action/resource_create', [
                             "package_id" => Str::kebab($file->judul),
                             // "url" =>  "https://raw.githubusercontent.com/frictionlessdata/test-data/master/files/csv/100kb.csv",
-                            "description" => "$file->judul" ,
-                            "name" => "$file->judul",
-                            // "upload" => fopen(public_path('uploads/' . $file->file), 'r')
+                            "description" => $file->keterangan,
+                            "name" => $file->judul,
                         ]);
                         // $resp = json_decode($resource_create->body(), true);
                         // dd(public_path('uploads/'. $file->file));
@@ -100,7 +95,21 @@ class CkanController extends Controller
             }
             ++$file_count;
         }
+
+        $log = new \App\Models\CkanApi;
+        $log->jumlah_data = $file_count;
+        $log->status = "sukses";
+        $log->keterangan = "";
+        $log->save();
         
         return redirect()->back()->with('success', 'Data berhasil disinkronisasi sebanyak ' . $file_count);
+    }
+
+    public function datatable()
+    {
+        $data = \App\Models\CkanApi::all();
+        
+        return Datatables::of($data)
+            ->make(true);
     }
 }
