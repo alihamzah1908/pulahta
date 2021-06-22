@@ -41,7 +41,7 @@
 </style>
 <!-- <h5 class="card-title mt-4 mb-4">Selamat Datang di Aplikasi Pengumpulan Data</h5> -->
 <div class="row mt-4">
-    <div class="col-xl-6 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -52,6 +52,22 @@
                     </div>
                     <div class="col-auto">
                         <i class="fa fa-upload fa-2x text-primary" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                            Total File Terpublikasi</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::where('status_file','publikasi')->count() }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-upload fa-2x text-warning" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
@@ -112,12 +128,14 @@
         var jumlah = [];
         var upload = [];
         var download = [];
+        var publikasi = [];
         $.each(response, function(index, value){
             nama_kelompok.push(value.nama_opd)
             jumlah.push(value.total)
             upload.push(value.upload)
             download.push(value.download)
             alias_opd.push(value.alias_opd)
+            publikasi.push(value.publikasi)
         })
         Highcharts.chart('container', {
             chart: {
@@ -156,6 +174,10 @@
             series: [{
                 name: 'Upload',
                 data: upload
+
+            },{
+                name: 'Terpublikasi',
+                data: publikasi
 
             }, {
                 name: 'Total File',

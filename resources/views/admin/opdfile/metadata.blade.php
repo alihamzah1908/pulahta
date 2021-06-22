@@ -14,47 +14,97 @@
         <div class="card-body">
             <form action="{{ route('upload.metadata') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @for($i = 1; $i < 3; $i++)
-                <h5>Field {{ $i }} </h5>
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="bmd-label-floating"><strong>Tipe</strong></label>
-                            <select name="tipe[]" class="form-control">
-                                <option value="text">text</option>
-                                <option value="numeric">numeric</option>
-                                <option value="timestamp">timestamp</option>
-                            </select>
+                <div class="kolom">
+                    <h5 class="border-bottom mb-3">Field 1</h5>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="bmd-label-floating"><strong>Tipe</strong></label>
+                                <select name="tipe[]" class="form-control">
+                                    <option value="text">text</option>
+                                    <option value="numeric">numeric</option>
+                                    <option value="timestamp">timestamp</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="bmd-label-floating"><strong>Label </strong></label>
+                                <input type="text" class="form-control" name="label[]" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="bmd-label-floating"><strong>Deskripsi </strong></label>
+                                <textarea name="keterangan[]" class="form-control"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="bmd-label-floating"><strong>Label </strong></label>
-                            <input type="text" class="form-control" name="label[]" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row border-bottom mb-2">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="bmd-label-floating"><strong>Deskripsi </strong></label>
-                            <textarea name="keterangan[]" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
-                @endfor
-                <div class="row pull-right">
                     <div class="col-md-5">
                         <input name="file_id" value="{{ request()->id}} " type="hidden"/>
                         <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+                        <button type="button" class="btn btn-success pull-right mr-2" id="tambah-kolom"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Form</button>
                         <div class="clearfix"></div>
                     <div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        var id = 2;
+        $('body').on('click','#tambah-kolom', function(){
+            var body = '<div class="form' + id + '">';
+            body += '<h5 class="border-bottom mb-3">Field ' + id + '</h5>';
+            body += '<div class="row">';
+            body += '<div class="col-md-5">';
+            body += '<div class="form-group">';
+            body += '<label class="bmd-label-floating"><strong>Tipe</strong></label>';
+            body += '<select name="tipe[]" class="form-control">';
+            body += '<option value="text">text</option>';
+            body += '<option value="numeric">numeric</option>';
+            body += '<option value="timestamp">timestamp</option>';
+            body += '</select>';
+            body += '</div>';
+            body += '</div>';
+            body += '<div class="col-md-2 p-4 mt-1">';
+            body += '<a href="javascript:void(0)" class="hapus-form" data-bind='+ id +'><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i> Hapus Form</span></a>';
+            body += '</div>';
+            body += '</div>';
+            body += '<div class="row">';
+            body += '<div class="col-md-5">';
+            body += '<div class="form-group">';
+            body += '<label class="bmd-label-floating"><strong>Label </strong></label>';
+            body += '<input type="text" class="form-control" name="label[]" required>';
+            body += '</div>';
+            body += '</div>';
+            body += '</div>';
+            body += '<div class="row">';
+            body += '<div class="col-md-5">';
+            body += '<div class="form-group">';
+            body += '<label class="bmd-label-floating"><strong>Deskripsi </strong></label>';
+            body += '<textarea name="keterangan[]" class="form-control"></textarea>';
+            body += '</div>';
+            body += '</div>';
+            body += '</div>';
+            body += '</div>';
+            $('.kolom').append(body)
+            id++;
+        })
+
+        $('body').on('click','.hapus-form', function(){
+            var id = $(this).attr('data-bind');
+            $('.form'+ id +'').remove();
+        })
+    })
+</script>
+@endpush

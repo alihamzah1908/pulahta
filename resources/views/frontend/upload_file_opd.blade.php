@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
-                <label class="bmd-label-floating">Nama File</label>
+                <label class="bmd-label-floating"><strong>Nama File </strong></label>
                 <input type="text" name="judul" class="form-control" required>
             </div>
         </div>
@@ -29,16 +29,16 @@
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
-                <label class="bmd-label-floating">Nama Perangkat Daerah</label>
+                <label class="bmd-label-floating"><strong>Nama Perangkat Daerah </strong></label>
                 <select name="nama_opd" class="form-control" disabled>
                     <option value="">Pilih Opd</option>
-                    @php 
+                    @php
                     $opd = \App\Models\Opd::all();
                     @endphp
                     @foreach($opd as $val)
                         @if(request()->perangkat == 'opd')
                             <option value="{{ $val->id }}"{{$val->id == request()->id ? ' selected' : ''}}>{{ $val->nama_opd }}</option>
-                        @else 
+                        @else
                             <option value="{{ $val->id }}"{{$val->id == $nama->opd_id ? ' selected' : ''}}>{{ $val->nama_opd }}</option>
                         @endif
                     @endforeach
@@ -49,7 +49,7 @@
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
-                <label class="bmd-label-floating">File </label>
+                <label class="bmd-label-floating"><strong>File </strong></label>
                 <input type="file" class="form-control" name="file" required>
             </div>
         </div>
@@ -57,8 +57,16 @@
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
-                <label class="bmd-label-floating">Deskripsi File </label>
+                <label class="bmd-label-floating"><strong>Deskripsi Judul </strong></label>
                 <textarea name="keterangan" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="bmd-label-floating"><strong>Deskripsi Tabel </strong></label>
+                <textarea name="keterangan_table" class="form-control"></textarea>
             </div>
         </div>
     </div>
@@ -68,7 +76,7 @@
             <input type="hidden" name="file_to_uptd" value="{{ $nama->id }}" />
             <input type="hidden" name="upload_file_by" value="{{ request()->id }}" />
             <input type="hidden" name="uptd_id" value="{{ Auth::user()->uptd_parent }}" />
-            <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
             <div class="clearfix"></div>
         <div>
     </div>

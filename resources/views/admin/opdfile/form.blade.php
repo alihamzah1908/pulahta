@@ -69,8 +69,16 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label class="bmd-label-floating"><strong>Deskripsi File </strong></label>
+                            <label class="bmd-label-floating"><strong>Deskripsi Judul </strong></label>
                             <textarea name="keterangan" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="bmd-label-floating"><strong>Deskripsi Tabel </strong></label>
+                            <textarea name="keterangan_table" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>

@@ -53,6 +53,7 @@ class OpdFileController extends Controller
                 $data->upload_file_by = $request["upload_file_by"];
                 $data->status_file = 'asli';
                 $data->keterangan = $request["keterangan"];
+                $data->keterangan_table = $request["keterangan_table"];
                 $data->save();
             }
         } else {
@@ -72,6 +73,7 @@ class OpdFileController extends Controller
             }
             $data->status_file = 'asli';
             $data->keterangan = $request["keterangan"];
+            $data->keterangan_table = $request["keterangan_table"];
             $data->created_by = Auth::user()->id;
             $data->save();
         }
@@ -105,6 +107,7 @@ class OpdFileController extends Controller
         }
         $data->status_file = 'asli';
         $data->keterangan = $request["keterangan"];
+        $data->keterangan_table = $request["keterangan_table"];
         $data->created_by = Auth::user()->id;
         $data->upload_file_by = $request["upload_file_by"];
         $data->save();

@@ -24,6 +24,7 @@ class OpdController extends Controller
             $arrx["total"] = $val->get_file->count();
             $arrx["upload"] = $val->get_file->count();
             $arrx["download"] = $val->get_file->pluck('total_download')->sum();
+            $arrx["publikasi"] = \App\Models\OpdFile::where('status_file','publikasi')->where('opd_id', $val->id)->count();
             $arr[] = $arrx;
         }
         return response()->json($arr);
