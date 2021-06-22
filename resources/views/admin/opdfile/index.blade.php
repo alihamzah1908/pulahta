@@ -124,19 +124,19 @@
         })
 
         $('body').on('click', '.ubah_status', function(){
+            var status = $(this).attr('data-bind');
+            var id = $(this).attr('data-id');
+            var token = $("meta[name='csrf-token']").attr("content");
             Swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
+                title: 'Apakah anda yakin ?',
+                text: "File status akan berubah menjadi "+ status +"!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, ubah data!'
+                confirmButtonText: 'Ya, '+ status +' data!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var status = $(this).attr('data-bind');
-                    var id = $(this).attr('data-id');
-                    var token = $("meta[name='csrf-token']").attr("content");
                     $.ajax({
                         dataType: 'json',
                         method: 'post',
@@ -149,7 +149,7 @@
                     }).done(function(){
                         Swal.fire(
                             'Terubah!',
-                            'File status sudah terubah.',
+                            'File Status ' + status + '.',
                             'success'
                         ).then((result) => {
                             if (result.isConfirmed) {

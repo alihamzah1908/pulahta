@@ -50,7 +50,7 @@ class CkanController extends Controller
                             'Authorization' => config('ckanapi.private_key')
                         ])->post('http://data.ciamiskab.go.id/api/3/action/resource_create', [
                             "package_id" => Str::kebab($file->judul),
-                            "description" => $file->keterangan , // coba ganti dengan $file->keterangan
+                            "description" => $file->keterangan, // coba ganti dengan $file->keterangan
                             "name" => $file->judul,
                         ]);
                         // $resp = json_decode($resource_create->body(), true);
