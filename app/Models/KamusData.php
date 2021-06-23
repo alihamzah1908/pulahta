@@ -10,4 +10,8 @@ class KamusData extends Model
     use HasFactory;
 
     protected $table = 'metadata_file';
+
+    public function get_opd_file(){
+        return $this->belongsTo('\App\Models\OpdFile','opd_file_id','id');
+    }
 }

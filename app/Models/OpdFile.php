@@ -25,11 +25,18 @@ class OpdFile extends Model
         return $this->belongsTo('\App\Models\Uptd', 'file_to_uptd', 'id');
     }
 
-    public function upload_by_opd(){
+    public function upload_by_opd()
+    {
         return $this->belongsTo('\App\Models\Opd', 'upload_file_by', 'id');
     }
 
-    public function upload_by_uptd(){
+    public function upload_by_uptd()
+    {
         return $this->belongsTo('\App\Models\Uptd', 'upload_file_by', 'id');
+    }
+
+    public function get_metadata()
+    {
+        return $this->hasMany('\App\Models\KamusData', 'opd_file_id', 'id');
     }
 }

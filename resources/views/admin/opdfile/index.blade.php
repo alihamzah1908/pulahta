@@ -60,7 +60,14 @@
                                 <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                                 <div class="dropdown-menu" role="menu">
                                     @if(Auth::user()->role == 'super admin')
-                                    <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Tambah Kamus Data</a>
+                                        @php
+                                        $metadata = $val->get_metadata->count();
+                                        @endphp
+                                        @if($metadata < 1)
+                                            <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Tambah Kamus Data</a>
+                                        @else 
+                                            <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Edit Kamus Data</a>
+                                        @endif
                                         @if($val->status_file == 'asli')
                                             <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="verifikasi">Ubah Status File</a>
                                         @elseif($val->status_file == 'verifikasi')

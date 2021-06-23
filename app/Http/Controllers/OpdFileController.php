@@ -116,13 +116,34 @@ class OpdFileController extends Controller
 
     public function upload_metadata(Request $request)
     {
-        foreach ($request["tipe"] as $key => $val) {
-            $obj = new \App\Models\KamusData();
-            $obj->opd_file_id = $request["file_id"];
-            $obj->tipe = $val;
-            $obj->label = $request["label"][$key];
-            $obj->kegunaan = $request["keterangan"][$key];
-            $obj->save();
+        if ($request["id_metadata"]) {
+            foreach ($request["id_metadata"] as $key => $value) {
+                // $collection = collect($request["id_metadata"]);
+                // if ($collection->contains($request["id_metadata"])) {
+                $obj = \App\Models\KamusData::find($value);
+                $obj->opd_file_id = $request["file_id"];
+                $obj->tipe = $request["tipe"][$key];
+                $obj->label = $request["label"][$key];
+                $obj->kegunaan = $request["keterangan"][$key];
+                $obj->save();
+                // } else {
+                //     $obj = new \App\Models\KamusData();
+                //     $obj->opd_file_id = $request["file_id"];
+                //     $obj->tipe = $request["tipe"][$key];
+                //     $obj->label = $request["label"][$key];
+                //     $obj->kegunaan = $request["keterangan"][$key];
+                //     $obj->save();
+                // }
+            }
+        } else {
+            foreach ($request["tipe"] as $key => $val) {
+                $obj = new \App\Models\KamusData();
+                $obj->opd_file_id = $request["file_id"];
+                $obj->tipe = $val;
+                $obj->label = $request["label"][$key];
+                $obj->kegunaan = $request["keterangan"][$key];
+                $obj->save();
+            }
         }
         return redirect(route('file.metadata', ['id' => $request["file_id"]]));
     }
