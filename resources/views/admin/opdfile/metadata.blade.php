@@ -113,6 +113,7 @@
         var id = 2;
         $('body').on('click','.tambah-kolom', function(){
             var body = '<div class="form' + id + '">';
+            body += '<h5 class="border-bottom mb-3">Field ' + id + '</h5>';
             body += '<div class="row">';
             body += '<div class="col-md-5">';
             body += '<div class="form-group">';

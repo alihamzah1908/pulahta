@@ -69,9 +69,9 @@
                                             <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Edit Kamus Data</a>
                                         @endif
                                         @if($val->status_file == 'asli')
-                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="verifikasi">Ubah Status File</a>
+                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="verifikasi">Verifikasi File</a>
                                         @elseif($val->status_file == 'verifikasi')
-                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="publikasi">Ubah Status File</a>
+                                            <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="publikasi">Publikasi File</a>
                                         @endif
                                     @endif
                                     <a class="dropdown-item delete" role="presentation" href="javascript:void(0)" data-bind="{{ $val->id }}" data-file="{{ $val->file }}">Delete</a>
