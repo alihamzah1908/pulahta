@@ -5,7 +5,7 @@
         @php 
         $opd = \App\Models\Opd::find(request()->id);
         @endphp
-        <h3 class="mt-4 mb-3">Form Tambah User OPD</h3>
+        <h5 class="mt-4 mb-3">Form Tambah User OPD</h5>
     @endif
     <ol class="breadcrumb mb-4 mt-4">
         <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>

@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="row mt-4 border-bottom mb-4">
         <div class="col-md-6">
-            <h3>Data Perangkat Daerah</h3>
+            <h5>Data Perangkat Daerah</h3>
         </div>
         <div class="col-md-6 mb-4 d-flex justify-content-end">
             @if(Auth::user()->role == 'super admin')
@@ -161,6 +161,7 @@
                 { data: "aksi" },
             ],
             "order": [[3, 'desc']],
+            "pageLength": 25,
              createdRow: function (row, data, index) {
                 var td = $(row).find("td:first");
                 if(data.total_parent == 0){

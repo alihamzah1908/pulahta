@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="row pull-right">
+    <div class="row">
         <div class="col-md-5">
             <input type="hidden" name="opd_id" value="{{ $nama->opd_id }}" />
             <input type="hidden" name="file_to_uptd" value="{{ $nama->id }}" />

@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="row mt-4 border-bottom mb-4">
         <div class="col-md-6">
-            <h3>Data users</h3>
+            <h5>Data users</h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end">
             @if(Auth::user()->role == 'super admin')
@@ -28,7 +28,7 @@
                 <tr>
                     <th></th>
                     <th>Nama User</th>
-                    <th>Email</th>
+                    <th>Username</th>
                     <th>Role</th>
                     <th>Aksi</th>
                 </tr>
@@ -242,7 +242,7 @@
                 },
                 columns: [
                     { title: 'Nama User', data: 'name' },
-                    { title: 'Email', data: 'email' },
+                    { title: 'Username', data: 'username' },
                     { title: 'User Sebagai', data: 'role' },
                     { title: 'Aksi', data: 'aksi' },
                 ],
@@ -408,11 +408,12 @@
                     "defaultContent": ''
                 },
                 { data: "name"},
-                { data: "email"},
+                { data: "username"},
                 { data: "role"},
                 { data: "aksi" },
             ],
             "order": [[2, 'desc']],
+            "pageLength": 25,
              createdRow: function (row, data, index) {
                 var td = $(row).find("td:first");
                 if(data.total_parent == 0){

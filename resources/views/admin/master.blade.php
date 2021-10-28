@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/icon.png') }}" />  
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/icon.png') }}" />
         <title>Administrator Pulahta</title>
         <link href="{{ asset('admin/css/styles.css') }}" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,6 +27,16 @@
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="notifikasi" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bell" aria-hidden="true">
+                            <span class="num text-danger font-weight-bold total_notif"></span>
+                        </i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right notifikasi" aria-labelledby="notifikasi">
+
+                    </div>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user" aria-hidden="true"></i>
@@ -115,6 +125,31 @@
         <script src="{{ asset('admin/js/dataTables.bootstrap4.min.js') }}" crossorigin="anonymous"></script>
         <script src="{{ asset('admin/js/bootstrap.min.js') }}" crossorigin="anonymous"></script> -->
         <!-- <script src="{{ asset('admin/assets/demo/datatables-demo.js') }}"></script> -->
+        <script>
+            function loadlink(){
+                $.ajax({
+                    'url': '{{ route("notifikasi") }}',
+                    'method': 'get',
+                    'dataType': 'json'
+                }).done(function(response){
+                    $('.total_notif').html(response.length)
+                    if(response.length > 0){
+                        // console.log(response)
+                        $('.notifikasi').html(' ')
+                        $.each(response, function(index, value){
+                            $('.notifikasi').append('<a href="{{ route("opd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">Anda menerima file dari ' + value.name +'</p></a>')
+                        })
+                        return false
+                    }else{
+                        $('.notifikasi').html(' ')
+                    }
+                })
+            }
+            loadlink();
+            setInterval(function(){
+                loadlink()
+            }, 10000);
+        </script>
         @stack('scripts')
     </body>
 </html>

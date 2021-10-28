@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary pull-right">Ubah Password</button>
+                            <button type="submit" class="btn btn-primary pull-right btn-sm">Ubah Password</button>
                         </div>
                     </div>
                 </div>

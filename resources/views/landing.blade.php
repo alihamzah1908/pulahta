@@ -20,7 +20,6 @@
 
   <!-- Custom styles for this template -->
   <link href="{{ asset('assets/css/coming-soon.min.css') }}" rel="stylesheet">
-
 </head>
 
 <body>
@@ -42,7 +41,7 @@
             <div class="input-group input-group-newsletter">
               <!-- <input type="email" class="form-control" placeholder="Enter email..." aria-label="Enter email..." aria-describedby="submit-button"> -->
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" id="submit-button">Mohon login!</button>
+                    <button class="btn btn-secondary btn-sm" type="button" id="submit-button">Mohon login!</button>
                 </div>
             </div>
             @if(session('error'))
@@ -58,13 +57,13 @@
             <form class="form-signin" method="post" action="{{ route('prosess.login') }}">
                 @csrf
                 <div class="input-group input-group-newsletter">
-                  <input type="text" class="form-control" name="username" placeholder="Enter username..." aria-label="Enter email..." aria-describedby="submit-button">
+                  <input type="text" class="form-control" name="username" placeholder="Enter username..." aria-label="Enter email..." aria-describedby="submit-button" required>
                   <!-- <div class="input-group-append">
                     <button class="btn btn-secondary" type="button" id="submit-button">Please login!</button>
                   </div> -->
                 </div>
                 <div class="input-group input-group-newsletter mt-4">
-                  <input type="password" name="password" class="form-control" placeholder="Enter password..." aria-label="Enter email..." aria-describedby="submit-button">
+                  <input type="password" name="password" class="form-control" placeholder="Enter password..." aria-label="Enter email..." aria-describedby="submit-button" required>
                   <!-- <div class="input-group-append">
                     <button class="btn btn-secondary" type="button" id="submit-button">Please login!</button>
                   </div> -->
@@ -72,7 +71,7 @@
                 <div class="input-group input-group-newsletter mt-4">
                   <!-- <input type="email" class="form-control" placeholder="Enter email..." aria-label="Enter email..." aria-describedby="submit-button"> -->
                   <div class="input-group-append">
-                    <button class="btn btn-secondary sign-in" type="submit">MASUK</button>
+                    <button class="btn btn-secondary sign-in btn-sm" type="submit">MASUK</button>
                   </div>
                 </div>
             </form>

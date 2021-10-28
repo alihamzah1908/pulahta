@@ -1,14 +1,14 @@
 @extends('admin.master')
 @section('content')
 <div class="container-fluid">
-    <h3 class="mt-4 mb-3">Form Upload File</h3>
+    <h5 class="mt-4 mb-3">Form Upload File</h5>
     <ol class="breadcrumb mb-4 mt-4">
         <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
         <li class="breadcrumb-item active">Upload File</li>
     </ol>
     <div class="card">
-        <div class="card-header card-header-primary">
-            <h4 class="card-title">Upload File</h4>
+        <div class="card-header">
+            <h5 class="card-title">Upload File</h5>
             <!-- <p class="card-category">Complete your profile</p> -->
         </div>
         <div class="card-body">
@@ -82,14 +82,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pull-right">
+                <div class="row">
                     <div class="col-md-5">
                         @if(request()->type == 'staff')
                             <input type="hidden" name="upload_file_by" value="{{ request()->uptd_id }}" />
                         @else 
                             <input type="hidden" name="upload_file_by" value="{{ request()->id }}" />
                         @endif
-                        <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+                        <button type="submit" class="btn btn-primary pull-right btn-sm">Simpan</button>
                         <div class="clearfix"></div>
                     <div>
                 </div>

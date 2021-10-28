@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use DataTables;
+use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\SendMail;
-use Illuminate\Support\Facades\Mail;
-use DataTables;
-use Auth;
+
 class UserController extends Controller
 {
     /**
@@ -39,13 +39,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if($request["id"]){
+        if ($request["id"]) {
             $user = \App\Models\User::findOrFail($request["id"]);
-        }else{
+        } else {
             $user = new \App\Models\User();
             $nama = $request["name"];
-           // $email = $request["email"];
-           // Mail::to($email)->send(new SendMail($nama));
+            //$email = $request["email"];
+            //Mail::to($email)->send(new SendMail($nama));
             $user->password = Hash::make($request["password"]);
         }
         $user->name = $request["name"];
@@ -93,22 +93,23 @@ class UserController extends Controller
         //
     }
 
-    public function proses_ubah_password(Request $request){
+    public function proses_ubah_password(Request $request)
+    {
         // dd($request["password_lama"]);
-        if(!(Hash::check($request["password_lama"], Auth::user()->password))){
-            return redirect()->back()->with("error","Password anda tidak sama dengan password sebelumnya. Mohon dicoba kembali.");
+        if (!(Hash::check($request["password_lama"], Auth::user()->password))) {
+            return redirect()->back()->with("error", "Password anda tidak sama dengan password sebelumnya. Mohon dicoba kembali.");
         }
-        if(strcmp($request["password_lama"], $request["password_baru"]) == 0){
-            return redirect()->back()->with("error","Password baru anda tidak boleh sama dengan dengan password lama. Mohon dicoba kembali.");
+        if (strcmp($request["password_lama"], $request["password_baru"]) == 0) {
+            return redirect()->back()->with("error", "Password baru anda tidak boleh sama dengan dengan password lama. Mohon dicoba kembali.");
         }
-        if(!strcmp($request["password_baru"], $request["konfirmasi_password"]) == 0){
-            return redirect()->back()->with("error","Password baru harus sama dengan password konformasi anda. Mohon tulis kembali.");
+        if (!strcmp($request["password_baru"], $request["konfirmasi_password"]) == 0) {
+            return redirect()->back()->with("error", "Password baru harus sama dengan password konformasi anda. Mohon tulis kembali.");
         }
         $user = Auth::user();
         $user->password = Hash::make($request["password_baru"]);
         $user->save();
-        
-        return redirect()->back()->with("success","Ubah Password Berhasil !");
+
+        return redirect()->back()->with("success", "Ubah Password Berhasil !");
     }
 
     /**
@@ -155,7 +156,7 @@ class UserController extends Controller
                     ->get();
             }
             return Datatables::of($data)
-                ->addColumn('total_parent', function($val){
+                ->addColumn('total_parent', function ($val) {
                     return \App\Models\User::where('parent_admin', $val->id)->count();
                 })
                 ->addColumn('aksi', function ($val) {
@@ -190,5 +191,15 @@ class UserController extends Controller
             })
             ->rawColumns(['aksi'])
             ->make(true);
+    }
+
+    public function get_penduduk(Request $request)
+    {
+        $token = config('ckanapi.secret_key');
+        $response = Http::get('http://localhost:8000/api/get_all_penduduk', [
+            'secret_key' => $token,
+        ]);
+        $data = json_decode($response->body());
+        return response()->json($data);
     }
 }

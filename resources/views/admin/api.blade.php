@@ -49,9 +49,10 @@
         </div>
     </div> --}}
 </div>
+<div class="container-fluid">
 <div class="row mt-4 border-bottom mb-4">
     <div class="col-md-6">
-        <h3>Manajemen API CKAN</h3>
+        <h5>Manajemen API CKAN</h5>
     </div>
     <div class="col-md-6 mb-4 d-flex justify-content-end">
         @if(Auth::user()->role == 'super admin')
@@ -76,6 +77,7 @@
         </tbody>
     </table>
 </div>
+    </div>
 @endsection 
 @push('scripts')
 <script>

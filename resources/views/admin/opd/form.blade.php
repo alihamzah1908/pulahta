@@ -5,7 +5,7 @@
         @php 
         $opd = \App\Models\Opd::find(request()->id);
         @endphp
-        <h3 class="mt-4 mb-3">{{ request()->type ? 'Edit User Perangkat Daerah' : 'Edit Perangkat Daerah' }}</h3>
+        <h5 class="mt-4 mb-3">{{ request()->type ? 'Edit User Perangkat Daerah' : 'Edit Perangkat Daerah' }}</h5>
         <ol class="breadcrumb mb-4 mt-4">
             <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
             <li class="breadcrumb-item active">{{ request()->type ? 'Edit User Perangkat Daerah' : 'Edit Perangkat Daerah' }}</li>
@@ -14,7 +14,7 @@
         @php 
         $opd = '';
         @endphp
-        <h3 class="mt-4 mb-3">{{ request()->type ? 'Tambah User Perangkat Daerah' : 'Tambah Perangkat Daerah' }}</h3>
+        <h5 class="mt-4 mb-3">{{ request()->type ? 'Tambah User Perangkat Daerah' : 'Tambah Perangkat Daerah' }}</h5>
         <ol class="breadcrumb mb-4 mt-4">
             <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
             <li class="breadcrumb-item active">{{ request()->type ? 'Tambah User Perangkat Daerah' : 'Tambah Perangkat Daerah' }}</li>
@@ -65,9 +65,9 @@
                         @else 
                             @if(request()->id)
                                 <input type="hidden" name="id" value="{{ $opd ? $opd->id : '' }}" />
-                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-sm">Update</button>
                             @else 
-                                <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-sm">Simpan</button>
                             @endif
                         @endif
                     </div>

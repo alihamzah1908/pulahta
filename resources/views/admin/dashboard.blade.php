@@ -142,7 +142,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Rata - rata total file yang sudah diupload dan download'
+                text: 'Total file yang sudah diupload dan download'
             },
             subtitle: {
                 text: ''

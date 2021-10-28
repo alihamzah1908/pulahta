@@ -1,14 +1,14 @@
 @extends('admin.master')
 @section('content')
 <div class="container-fluid">
-    <h3 class="mt-4 mb-3">Data File Perangkat Daerah</h3>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
-        <li class="breadcrumb-item active">Data File Perangkat Daerah</li>
-    </ol>
     @php 
     $opd = \App\Models\Opd::where('id', request()->id)->first();
     @endphp
+    <h5 class="mt-4 mb-3">Dataset {{ $opd->nama_opd }}</h5>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
+        <li class="breadcrumb-item active">Dataset {{ $opd->nama_opd }}</li>
+    </ol>
     <div class="row">
         <div class="col-md-12 mb-4">
             <a href="{{ route('opdfile.form') }}?id={{ request()->id }}">
@@ -20,19 +20,21 @@
         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Nama Dataset</th>
-                    <th>Nama Perangkat</th>
+                    <th>Nama dataset</th>
+                    <th>Nama Perangkat Daerah</th>
                     <th>File</th>
-                    <th>Diupload Oleh</th>
-                    <th>File Diupload Untuk</th>
-                    <th>Status File</th>
-                    <th>Dibuat Pada</th>
+                    <th>Diupload oleh</th>
+                    <!-- <th>Diupload untuk</th> -->
+                    <th>Status file</th>
+                    <th>Dibuat pada</th>
                     <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @php 
-                $opd = \App\Models\OpdFile::where('opd_id', request()->id)->get();
+                $opd = \App\Models\OpdFile::where('opd_id', request()->id)
+                        ->orderBy('id','desc')
+                        ->get();
                 @endphp
                 @foreach($opd as $val)
                     <tr>
@@ -43,8 +45,10 @@
                                 <i class="fa fa-file" aria-hidden="true"></i>
                             </a>
                         </td>
-                        <td>{{ $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->get_opd->nama_opd }}</td>
-                        <td>{{ $val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd}}</td>
+                        <!-- <td> $val->upload_by_uptd ? $val->upload_by_uptd->nama_uptd : $val->get_opd->nama_opd </td> -->
+                        <td>{{ $val->get_user ? $val->get_user->name : '' }}</td>
+                        <!-- <td>$val->uptd_id || $val->get_uptd_list != '' ? $val->get_uptd_list->nama_uptd : $val->get_opd->nama_opd </td> -->
+                        <!-- <td>$val->get_uptd ? $val->get_uptd->nama_uptd : $val->get_opd->nama_opd</td> -->
                         <td>
                             @if($val->status_file == 'asli')
                                 <span class="badge badge-primary">{{ $val->status_file }}</span>
@@ -54,7 +58,7 @@
                                 <span class="badge badge-success">{{ $val->status_file }}</span>
                             @endif
                         </td>
-                        <td>{{ date('d M Y H:i', strtotime($val->created_at)) }}</td>
+                        <td>{{ date('d M Y', strtotime($val->created_at)) }}</td>
                         <td class="d-flex justify-content-end">
                             <div class="dropdown">
                                 <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
@@ -91,6 +95,7 @@
     $(document).ready(function(){
         $('#dataTable').dataTable({
             "order": [[4, 'desc']],
+            "pageLength": 25,
         });
         $('body').on('click', '.delete', function(){
             Swal.fire({

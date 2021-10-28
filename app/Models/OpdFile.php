@@ -25,6 +25,11 @@ class OpdFile extends Model
         return $this->belongsTo('\App\Models\Uptd', 'file_to_uptd', 'id');
     }
 
+    public function get_uptd_list()
+    {
+        return $this->belongsTo('\App\Models\Uptd', 'uptd_id', 'id');
+    }
+
     public function upload_by_opd()
     {
         return $this->belongsTo('\App\Models\Opd', 'upload_file_by', 'id');

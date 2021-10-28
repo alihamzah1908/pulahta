@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Zip;
+use DB;
 
 class OpdFileController extends Controller
 {
@@ -51,10 +52,19 @@ class OpdFileController extends Controller
                 $data->file = $new_name;
                 $data->file_to_uptd = $val;
                 $data->upload_file_by = $request["upload_file_by"];
+                $data->uptd_id = $val;
                 $data->status_file = 'asli';
                 $data->keterangan = $request["keterangan"];
                 $data->keterangan_table = $request["keterangan_table"];
                 $data->save();
+
+                // Notifikasi
+                $notifikasi = new \App\Models\Notifikasi();
+                $notifikasi->opd_id = $request["nama_opd"];
+                $notifikasi->opd_file_id = $data->id;
+                $notifikasi->is_read = 0;
+                $notifikasi->created_by = Auth::user()->id;
+                $notifikasi->save();
             }
         } else {
             $data = new \App\Models\OpdFile;
@@ -76,6 +86,14 @@ class OpdFileController extends Controller
             $data->keterangan_table = $request["keterangan_table"];
             $data->created_by = Auth::user()->id;
             $data->save();
+            // dd($data->id);
+            // Notifikasi
+            $notifikasi = new \App\Models\Notifikasi();
+            $notifikasi->opd_id = $request["nama_opd"];
+            $notifikasi->opd_file_id = $data->id;
+            $notifikasi->is_read = 0;
+            $notifikasi->created_by = Auth::user()->id;
+            $notifikasi->save();
         }
 
         // Tambah data file access
@@ -238,5 +256,30 @@ class OpdFileController extends Controller
         //     $arrx[$key] = public_path('/uploads').$val->file;
         // }
         // return ZipFacade::create($request["id"] .'-data-'. $request["nama_opd"] .'.zip', $arr);
+    }
+
+    public function notifikasi(Request $request)
+    {
+        if (Auth::user()->role == 'Admin') {
+            $notif = DB::table('notifikasi as a')
+                ->select('a.id as id_notifikasi','a.opd_id','b.*','c.*')
+                ->join('users as b', 'a.created_by', 'b.id')
+                ->join('opd as c', 'a.opd_id', 'c.id')
+                ->where('a.is_read','0')
+                ->where('a.created_by', '!=', Auth::user()->id)
+                ->where('a.opd_id', Auth::user()->opd_parent)
+                ->orderBy('a.id', 'desc')
+                ->get();
+        } elseif (Auth::user()->role == 'super admin') {
+            $notif = DB::table('notifikasi as a')
+                ->select('a.id as id_notifikasi','a.opd_id','b.*','c.*')
+                ->join('users as b', 'a.created_by', 'b.id')
+                ->join('opd as c', 'a.opd_id', 'c.id')
+                ->where('a.is_read','0')
+                ->where('a.created_by', '!=', Auth::user()->id)
+                ->orderBy('a.id', 'desc')
+                ->get();
+        }
+        return response()->json($notif);
     }
 }

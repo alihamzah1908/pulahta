@@ -21,7 +21,6 @@
                 ->where('id', Auth::user()->uptd_parent)
                 ->get();
             $opd_file = \App\Models\OpdFile::where('opd_id', Auth::user()->opd_parent)->count();
-            
             $check_file_uptd = \App\Models\OpdFile::where('opd_id', Auth::user()->opd_parent)->get();
             $pluck = $check_file_uptd->pluck('file_to_uptd');
             $impld = collect($pluck)->implode(',');

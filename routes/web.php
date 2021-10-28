@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +24,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
-    Route::get('/admin/opd/file', function () {
+    Route::get('/admin/opd/file', function (Request $request) {
+        // dd(request()->opd_file_id);
+        if(request()->opd_file_id){
+            $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
+            $notif->is_read = 1;
+            $notif->save();
+        }
         return view('admin.opdfile.index');
     })->name('opd.file');
     Route::get('/admin/opd/tambah', function () {
@@ -80,4 +86,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/api', 'App\Http\Controllers\CkanController@index')->name('api.index');
     Route::get('/admin/api/sinkronisasi', 'App\Http\Controllers\CkanController@sinkronisasi')->name('api.sikronisasi');
     Route::get('/admin/api/datatable', 'App\Http\Controllers\CkanController@datatable')->name('api.data');
+    Route::get('/notifikasi', 'App\Http\Controllers\OpdFileController@notifikasi')->name('notifikasi');
 });
