@@ -18,4 +18,12 @@ class Opd extends Model
     {
         return $this->hasMany('\App\Models\Uptd', 'opd_id', 'id');
     }
+
+    public function get_file_rkpd(){
+        return $this->hasMany('\App\Models\OpdFile', 'opd_id', 'id')->where('jenis_file','rkpd');
+    }
+
+    public function get_file_lkpj(){
+        return $this->hasMany('\App\Models\OpdFile', 'opd_id', 'id')->where('jenis_file','lkpj');
+    }
 }

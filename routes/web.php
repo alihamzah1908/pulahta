@@ -87,4 +87,40 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/api/sinkronisasi', 'App\Http\Controllers\CkanController@sinkronisasi')->name('api.sikronisasi');
     Route::get('/admin/api/datatable', 'App\Http\Controllers\CkanController@datatable')->name('api.data');
     Route::get('/notifikasi', 'App\Http\Controllers\OpdFileController@notifikasi')->name('notifikasi');
+
+    // DATA INFORMASI
+
+    // RKPD
+    Route::get('/data_informasi/rkpd', 'App\Http\Controllers\RkpdController@index')->name('rkpd');
+    Route::get('/data_informasi/rkpd/datatable', 'App\Http\Controllers\RkpdController@datatable')->name('rkpd.data');
+    Route::get('/data_informasi/rkpd/file', function (Request $request) {
+        // dd(request()->opd_file_id);
+        if(request()->opd_file_id){
+            $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
+            $notif->is_read = 1;
+            $notif->save();
+        }
+        return view('admin.rkpd.file');
+    })->name('rkpd.file');
+    Route::get('/data_informasi/rkpd/tambah_file', function () {
+        return view('admin.rkpd.form');
+    })->name('rkpd.form');
+    Route::post('/data_informasi/rkpd/store', 'App\Http\Controllers\RkpdController@store')->name('rkpd.store');
+
+    // LKPJ
+    Route::get('/data_informasi/lkpj', 'App\Http\Controllers\LkpjController@index')->name('lkpj');
+    Route::get('/data_informasi/lkpj/datatable', 'App\Http\Controllers\LkpjController@datatable')->name('lkpj.data');
+    Route::get('/data_informasi/lkpj/file', function (Request $request) {
+        // dd(request()->opd_file_id);
+        if(request()->opd_file_id){
+            $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
+            $notif->is_read = 1;
+            $notif->save();
+        }
+        return view('admin.lkpj.file');
+    })->name('lkpj.file');
+    Route::get('/data_informasi/lkpj/tambah_file', function () {
+        return view('admin.lkpj.form');
+    })->name('lkpj.form');
+    Route::post('/data_informasi/lkpj/store', 'App\Http\Controllers\LkpjController@store')->name('lkpj.store');
 });

@@ -6,12 +6,12 @@
     @endphp
     <h5 class="mt-4 mb-3">Dataset {{ $opd->nama_opd }}</h5>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('rkpd') }}">RKPD</a></li>
         <li class="breadcrumb-item active">Dataset {{ $opd->nama_opd }}</li>
     </ol>
     <div class="row">
         <div class="col-md-12 mb-4">
-            <a href="{{ route('opdfile.form') }}?id={{ request()->id }}">
+            <a href="{{ route('rkpd.form') }}?id={{ request()->id }}">
                 <button class="btn btn-sm btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload File</button>
             </a>
         </div>
@@ -27,12 +27,13 @@
                     <th>Jenis file</th>
                     <th>Status file</th>
                     <th>Dibuat pada</th>
-                    <th>Aksi</th>
+                    <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @php 
                 $opd = \App\Models\OpdFile::where('opd_id', request()->id)
+                        ->where('jenis_file','rkpd')
                         ->orderBy('id','desc')
                         ->get();
                 @endphp
@@ -64,24 +65,14 @@
                                 <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
                                 <div class="dropdown-menu" role="menu">
                                     @if(Auth::user()->role == 'super admin')
-                                        @php
-                                        $metadata = $val->get_metadata->count();
-                                        @endphp
-                                        @if($metadata < 1)
-                                            <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Tambah Kamus Data</a>
-                                        @else 
-                                            <a class="dropdown-item" role="presentation" href="{{ route('file.metadata') }}?id={{$val->id}}">Edit Kamus Data</a>
-                                        @endif
                                         @if($val->status_file == 'asli')
                                             <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="verifikasi">Verifikasi File</a>
                                         @elseif($val->status_file == 'verifikasi')
                                             <a class="dropdown-item ubah_status" role="presentation" href="javascript:void(0)" data-id="{{ $val->id }}" data-bind="publikasi">Publikasi File</a>
                                         @endif
                                     @endif
-                                    <a class="dropdown-item" role="presentation" href="{{ route('opdfile.download') }}?id={{$val->id}}&file={{ $val->file }}">Download</a>
-                                    @if($val->status_file == 'asli' || Auth::user()->role == 'super admin')
                                     <a class="dropdown-item delete" role="presentation" href="javascript:void(0)" data-bind="{{ $val->id }}" data-file="{{ $val->file }}">Delete</a>
-                                    @endif
+                                    <a class="dropdown-item" role="presentation" href="{{ route('opdfile.download') }}?id={{$val->id}}&file={{ $val->file }}">Download</a>
                                 </div>
                             </div>
                         </td>
@@ -96,7 +87,7 @@
 <script>
     $(document).ready(function(){
         $('#dataTable').dataTable({
-            "order": [[5, 'desc']],
+            "order": [[4, 'desc']],
             "pageLength": 25,
         });
         $('body').on('click', '.delete', function(){

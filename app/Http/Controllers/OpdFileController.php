@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Zip;
-use DB;
 
 class OpdFileController extends Controller
 {
@@ -56,6 +56,7 @@ class OpdFileController extends Controller
                 $data->status_file = 'asli';
                 $data->keterangan = $request["keterangan"];
                 $data->keterangan_table = $request["keterangan_table"];
+                $data->jenis_file = $request["jenis_file"];
                 $data->save();
 
                 // Notifikasi
@@ -84,6 +85,7 @@ class OpdFileController extends Controller
             $data->status_file = 'asli';
             $data->keterangan = $request["keterangan"];
             $data->keterangan_table = $request["keterangan_table"];
+            $data->jenis_file = $request["jenis_file"];
             $data->created_by = Auth::user()->id;
             $data->save();
             // dd($data->id);
@@ -262,20 +264,33 @@ class OpdFileController extends Controller
     {
         if (Auth::user()->role == 'Admin') {
             $notif = DB::table('notifikasi as a')
-                ->select('a.id as id_notifikasi','a.opd_id','b.*','c.*')
+                ->select('a.id as id_notifikasi', 'a.opd_id', 'b.*', 'c.*', 'd.jenis_file')
                 ->join('users as b', 'a.created_by', 'b.id')
                 ->join('opd as c', 'a.opd_id', 'c.id')
-                ->where('a.is_read','0')
+                ->join('opd_file as d', 'a.opd_file_id', 'd.id')
+                ->where('a.is_read', '0')
                 ->where('a.created_by', '!=', Auth::user()->id)
                 ->where('a.opd_id', Auth::user()->opd_parent)
                 ->orderBy('a.id', 'desc')
                 ->get();
-        } elseif (Auth::user()->role == 'super admin') {
+        } elseif (Auth::user()->role == 'super admin' && Auth::user()->username == 'datainformasi') {
             $notif = DB::table('notifikasi as a')
-                ->select('a.id as id_notifikasi','a.opd_id','b.*','c.*')
+                ->select('a.id as id_notifikasi', 'a.opd_id', 'b.*', 'c.*', 'd.jenis_file')
                 ->join('users as b', 'a.created_by', 'b.id')
                 ->join('opd as c', 'a.opd_id', 'c.id')
-                ->where('a.is_read','0')
+                ->join('opd_file as d', 'a.opd_file_id', 'd.id')
+                ->where('a.is_read', '0')
+                ->where('a.created_by', '!=', Auth::user()->id)
+                ->whereIn('d.jenis_file', ['lkpj','rkpd'])
+                ->orderBy('a.id', 'desc')
+                ->get();
+        } elseif (Auth::user()->role == 'super admin') {
+            $notif = DB::table('notifikasi as a')
+                ->select('a.id as id_notifikasi', 'a.opd_id', 'b.*', 'c.*', 'd.jenis_file')
+                ->join('users as b', 'a.created_by', 'b.id')
+                ->join('opd as c', 'a.opd_id', 'c.id')
+                ->join('opd_file as d', 'a.opd_file_id', 'd.id')
+                ->where('a.is_read', '0')
                 ->where('a.created_by', '!=', Auth::user()->id)
                 ->orderBy('a.id', 'desc')
                 ->get();

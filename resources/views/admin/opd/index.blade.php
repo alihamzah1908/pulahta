@@ -27,10 +27,10 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Nama Perangkat Daerah</th>
-                    <th>Nama Alias Perangkat Daerah</th>
-                    <th>Status File</th>
-                    <th>Dibuat Pada</th>
+                    <th>Nama perangkat daerah</th>
+                    <th>Nama alias perangkat daerah</th>
+                    <th>Status file</th>
+                    <!-- <th>Upload file terbaru</th> -->
                     <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
             </thead>
@@ -157,7 +157,7 @@
                 { data: "nama_opd"},
                 { data: "alias_opd"},
                 { data: "status_file"},
-                { data: "dibuat_pada"},
+                // { data: "last_upload"},
                 { data: "aksi" },
             ],
             "order": [[3, 'desc']],
@@ -167,9 +167,8 @@
                 if(data.total_parent == 0){
                     td.removeClass('details-control');
                 }
-             }
+             },
         });
-        console.log(table)
         $('#dataTable tbody').on('click', 'td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row( tr );

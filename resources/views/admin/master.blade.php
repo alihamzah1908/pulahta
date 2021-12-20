@@ -71,14 +71,30 @@
                                 Dashboard</a
                             >
                             <div class="sb-sidenav-menu-heading">DATA</div>
-                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Kelola Data
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                            ></a> -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                                ><div class="sb-nav-link-icon"><i class="fa fa-database" aria-hidden="true"></i></div>
+                                Data Informasi
+                                <div class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div
+                            ></a>
+                            @php 
+                            $route = app('request')->route()->getAction()["as"];
+                            if($route == 'rkpd' || $route == 'lkpj'){
+                                $collapse = 'collapsed';
+                            }else{
+                                $collapse = 'collapse';
+                            }
+                            @endphp
+                            <div class="{{ $collapse }}" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ route('rkpd') }}"><i class="fa fa-file" aria-hidden="true"></i>&nbsp; RKPD</a>
+                                    <a class="nav-link" href="{{ route('lkpj') }}"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp; LKPJ</a>
+                                </nav>
+                            </div>
                             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav"> -->
+                                    @if(Auth::user()->username != 'datainformasi')
                                     <a class="nav-link" href="{{ route('opd.index') }}"><i class="fa fa-building" aria-hidden="true"></i>&nbsp; Perangkat Daerah</a>
+                                    @endif
                                     <a class="nav-link" href="{{ route('user.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen User</a>
                                     @if(Auth::user()->role == 'super admin')
                                     <a class="nav-link" href="{{ route('api.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen API</a>
@@ -137,7 +153,14 @@
                         // console.log(response)
                         $('.notifikasi').html(' ')
                         $.each(response, function(index, value){
-                            $('.notifikasi').append('<a href="{{ route("opd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">Anda menerima file dari ' + value.name +'</p></a>')
+                            if(value.jenis_file == 'rkpd'){
+                                $('.notifikasi').append('<a href="{{ route("rkpd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">(RKPD)Anda menerima file dari ' + value.name +'</p></a>')
+                            }else if(value.jenis_file == 'lkpj'){
+                                $('.notifikasi').append('<a href="{{ route("lkpj.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">(LKPJ)Anda menerima file dari ' + value.name +'</p></a>')
+                            }else{
+                                $('.notifikasi').append('<a href="{{ route("opd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">Anda menerima file dari ' + value.name +'</p></a>')
+                            }
+                            
                         })
                         return false
                     }else{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use DataTables;
+use DB;
 use Illuminate\Http\Request;
 
 class OpdController extends Controller
@@ -24,7 +25,7 @@ class OpdController extends Controller
             $arrx["total"] = $val->get_file->count();
             $arrx["upload"] = $val->get_file->count();
             $arrx["download"] = $val->get_file->pluck('total_download')->sum();
-            $arrx["publikasi"] = \App\Models\OpdFile::where('status_file','publikasi')->where('opd_id', $val->id)->count();
+            $arrx["publikasi"] = \App\Models\OpdFile::where('status_file', 'publikasi')->where('opd_id', $val->id)->count();
             $arr[] = $arrx;
         }
         return response()->json($arr);
@@ -96,8 +97,17 @@ class OpdController extends Controller
     public function datatable()
     {
         if (Auth::user()->role != 'super admin') {
+            // $data = DB::table('opd as a')
+            //     ->select('a.*', 'b.created_at as created_file')
+            //     ->join('opd_file as b', 'a.id', 'b.opd_id')
+            //     ->where('a.id', Auth::user()->opd_parent)
+            //     ->get();
             $data = \App\Models\Opd::where('id', Auth::user()->opd_parent)->get();
         } else {
+            // $data = DB::table('opd as a')
+            //     ->select('a.*', 'b.created_at as created_file')
+            //     ->join('opd_file as b', 'a.id', 'b.opd_id')
+            //     ->get();
             $data = \App\Models\Opd::all();
         }
         return Datatables::of($data)
@@ -118,8 +128,9 @@ class OpdController extends Controller
                     return '<span class="badge badge-danger">Tidak Tersedia</span>';
                 }
             })
-            ->addColumn('dibuat_pada', function ($val) {
-                return date('d M Y', strtotime($val->created_at));
+            ->addColumn('last_upload', function ($val) {
+                $last_upload = \App\Models\OpdFile::select('created_at')->orderBy('created_at','desc')->first();
+                return $last_upload->created_at;
             })
             ->addColumn('aksi', function ($val) {
                 if (Auth::user()->role == 'super admin') {
