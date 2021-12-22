@@ -49,20 +49,22 @@
                 </div>
                 @if(Auth::user()->role == 'Admin' && request()->type != 'staff')
                 <div class="row">
+                    @php 
+                    $uptd = \App\Models\Uptd::where('opd_id', Auth::user()->opd_parent)->get();
+                    @endphp
                     <div class="col-md-5">
-                        <label class="bmd-label-floating"><strong>Nama Uptd </strong></label>
-                        <div class="form-group">
-                            @php 
-                            $uptd = \App\Models\Uptd::where('opd_id', Auth::user()->opd_parent)->get();
-                            @endphp
-                            @foreach($uptd as $val)
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="file_to_uptd[]" value="{{ $val->id }}"> {{ $val->nama_uptd }}
-                                </label>
+                        @if($uptd->count() > 0)
+                            <label class="bmd-label-floating"><strong>Nama Uptd </strong></label>
+                            <div class="form-group">
+                                @foreach($uptd as $val)
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="file_to_uptd[]" value="{{ $val->id }}"> {{ $val->nama_uptd }}
+                                    </label>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
+                        @endif
                     </div>
                 </div>
                 @endif

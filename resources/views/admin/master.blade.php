@@ -86,18 +86,21 @@
                             @endphp
                             <div class="{{ $collapse }}" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('rkpd') }}"><i class="fa fa-file" aria-hidden="true"></i>&nbsp; RKPD</a>
+                                    <a class="nav-link" href="{{ route('rkpd') }}"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp; RKPD</a>
                                     <a class="nav-link" href="{{ route('lkpj') }}"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp; LKPJ</a>
                                 </nav>
                             </div>
                             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav"> -->
                                     @if(Auth::user()->username != 'datainformasi')
+                                    <a class="nav-link" href="{{ route('sektoral') }}"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp; Data Sektoral</a>
+                                    @endif
+                                    @if(Auth::user()->username != 'datainformasi' && Auth::user()->role == 'super admin')
                                     <a class="nav-link" href="{{ route('opd.index') }}"><i class="fa fa-building" aria-hidden="true"></i>&nbsp; Perangkat Daerah</a>
                                     @endif
                                     <a class="nav-link" href="{{ route('user.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen User</a>
-                                    @if(Auth::user()->role == 'super admin')
-                                    <a class="nav-link" href="{{ route('api.index') }}"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Manajemen API</a>
+                                    @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'datainformasi')
+                                    <a class="nav-link" href="{{ route('api.index') }}"><i class="fa fa-cog" aria-hidden="true"></i> &nbsp; Manajemen API</a>
                                     @endif
                                     <!-- <a class="nav-link" href="{{ route('opd.file') }}">OPD File</a> -->
                                 <!-- </nav>
@@ -157,6 +160,8 @@
                                 $('.notifikasi').append('<a href="{{ route("rkpd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">(RKPD)Anda menerima file dari ' + value.name +'</p></a>')
                             }else if(value.jenis_file == 'lkpj'){
                                 $('.notifikasi').append('<a href="{{ route("lkpj.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">(LKPJ)Anda menerima file dari ' + value.name +'</p></a>')
+                            }else if(value.jenis_file == 'sektoral'){
+                                $('.notifikasi').append('<a href="{{ route("sektoral.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">(Sektoral)Anda menerima file dari ' + value.name +'</p></a>')
                             }else{
                                 $('.notifikasi').append('<a href="{{ route("opd.file") }}?id=' + value.opd_id + '&opd_file_id='+ value.id_notifikasi + '"><p class="p-2">Anda menerima file dari ' + value.name +'</p></a>')
                             }

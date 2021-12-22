@@ -63,17 +63,17 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
-                            Total File Terpublikasi</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::where('status_file','publikasi')->count() }}</div>
+                            Total Download</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-download">{{ \App\Models\OpdFile::select('total_download')->pluck('total_download')->sum() }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fa fa-upload fa-2x text-warning" aria-hidden="true"></i>
+                        <i class="fa fa-download fa-2x text-danger" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -89,24 +89,40 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-md-6">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
-                            Total Download</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-download">{{ \App\Models\OpdFile::select('total_download')->pluck('total_download')->sum() }}</div>
+                            Total File Verifikasi</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::where('status_file','verifikasi')->count() }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fa fa-download fa-2x text-danger" aria-hidden="true"></i>
+                        <i class="fa fa-check-circle fa-2x text-warning" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                            Total File Terpublikasi</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 total-upload">{{ \App\Models\OpdFile::where('status_file','publikasi')->count() }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-arrow-up fa-2x text-warning" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="container"></div>
+<div id="container" class="mt-4"></div>
 @endsection
 @push('scripts')
 <script src="https://code.highcharts.com/highcharts.js"></script>

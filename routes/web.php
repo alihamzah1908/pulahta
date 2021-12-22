@@ -123,4 +123,20 @@ Route::group(['middleware' => 'auth'], function () {
         return view('admin.lkpj.form');
     })->name('lkpj.form');
     Route::post('/data_informasi/lkpj/store', 'App\Http\Controllers\LkpjController@store')->name('lkpj.store');
+
+    // Sektoral
+    Route::get('/data_informasi/sektoral', 'App\Http\Controllers\SektoralController@index')->name('sektoral');
+    Route::get('/data_informasi/sektoral/datatable', 'App\Http\Controllers\SektoralController@datatable')->name('sektoral.data');
+    Route::get('/data_informasi/sektoral/file', function (Request $request) {
+        if(request()->opd_file_id){
+            $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
+            $notif->is_read = 1;
+            $notif->save();
+        }
+        return view('admin.sektoral.file');
+    })->name('sektoral.file');
+    Route::get('/data_informasi/sektoral/tambah_file', function () {
+        return view('admin.sektoral.form');
+    })->name('sektoral.form');
+    Route::post('/data_informasi/sektoral/store', 'App\Http\Controllers\SektoralController@store')->name('sektoral.store');
 });

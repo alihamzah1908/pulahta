@@ -30,7 +30,7 @@
                     <th>Nama perangkat daerah</th>
                     <th>Nama alias perangkat daerah</th>
                     <th>Status file</th>
-                    <!-- <th>Upload file terbaru</th> -->
+                    <!-- <th>Status file (yang diterima)</th> -->
                     <th class="d-flex justify-content-end">Aksi</th>
                 </tr>
             </thead>

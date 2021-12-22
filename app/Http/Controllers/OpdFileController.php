@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use DB;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Zip;
@@ -42,7 +43,7 @@ class OpdFileController extends Controller
             $file = $request->file('file');
             $realname = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
-            $new_name = $realname . "-" . time() . "." . $extension;
+            $new_name = $request["judul"] . "-" . now()->format('Y-m-d-H-i-s') . "." . $extension;
             $file->move(public_path('uploads'), $new_name);
             foreach ($request["file_to_uptd"] as $val) {
                 $data = new \App\Models\OpdFile;
@@ -75,7 +76,7 @@ class OpdFileController extends Controller
                 $file = $request->file('file');
                 $realname = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
-                $new_name = $realname . "-" . time() . "." . $extension;
+                $new_name = $request["judul"] . "-" . now()->format('Y-m-d-H-i-s') . "." . $extension;
                 $file->move(public_path('uploads'), $new_name);
                 $data->file = $new_name;
                 $data->upload_file_by = $request["upload_file_by"];
@@ -120,7 +121,7 @@ class OpdFileController extends Controller
             $file = $request->file('file');
             $realname = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
-            $new_name = $realname . "-" . time() . "." . $extension;
+            $new_name = $request["judul"] . "-" . now()->format('Y-m-d-H-i-s') . "." . $extension;
             $file->move(public_path('uploads'), $new_name);
             $data->file = $new_name;
             $data->file_to_uptd = $request["file_to_uptd"];
@@ -225,9 +226,14 @@ class OpdFileController extends Controller
     {
         $opd = \App\Models\OpdFile::find($request["id"]);
         if ($opd) {
-            unlink(public_path() . '/uploads/' . $request["file"]);
-            $opd->delete();
-            return response()->json(["delete" => 'success']);
+            $path = public_path() . '/uploads/' . $request["file"];
+            $file_exists = File::exists($path);
+            if ($file_exists == false) {
+                return response()->json(["delete" => 'failed']);
+            } else {unlink(public_path() . '/uploads/' . $request["file"]);
+                $opd->delete();
+                return response()->json(["delete" => 'failed']);
+            }
         } else {
             return response()->json(["delete" => 'failed']);
         }
@@ -281,7 +287,7 @@ class OpdFileController extends Controller
                 ->join('opd_file as d', 'a.opd_file_id', 'd.id')
                 ->where('a.is_read', '0')
                 ->where('a.created_by', '!=', Auth::user()->id)
-                ->whereIn('d.jenis_file', ['lkpj','rkpd'])
+                ->whereIn('d.jenis_file', ['lkpj', 'rkpd'])
                 ->orderBy('a.id', 'desc')
                 ->get();
         } elseif (Auth::user()->role == 'super admin') {

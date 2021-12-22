@@ -1,18 +1,18 @@
 @extends('admin.master')
 @section('content')
 <div class="container-fluid">
-    <h5 class="mt-4 mb-3">Upload file RKPD</h5>
+    <h5 class="mt-4 mb-3">Upload file Sektoral</h5>
     <ol class="breadcrumb mb-4 mt-4">
-        <li class="breadcrumb-item"><a href="{{ route('rkpd') }}">RKPD</a></li>
-        <li class="breadcrumb-item active">Upload file RKPD</li>
+        <li class="breadcrumb-item"><a href="{{ route('rkpd') }}">Sektoral</a></li>
+        <li class="breadcrumb-item active">Upload file Sektoral</li>
     </ol>
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Upload file RKPD</h5>
+            <h5 class="card-title">Upload file sektoral</h5>
             <!-- <p class="card-category">Complete your profile</p> -->
         </div>
         <div class="card-body">
-            <form action="{{ route('rkpd.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('sektoral.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-5">
