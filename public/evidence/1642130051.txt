@@ -1,0 +1,11 @@
+catatan pullahta dokumentasi
+1. fitur logout
+2. ubah password
+3. status file dikirim dan ditrerima
+4. klik icon plus (+) di list data(RKPD, LKPJ, dan Sektoral), untuk melihat column lainya (status file diterima dan dikirim) 
+5. menambahkan evidence di lkpj
+6. dalam paragraf 
+	B. PENGELOLAAN DATA
+	    a. Upload data 
+   - ubah menu Data menjadi menu DATA INFORMASI 
+   - RKPD ubah menjadi LKPJ

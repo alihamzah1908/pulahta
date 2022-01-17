@@ -1,35 +1,31 @@
 @extends('admin.master')
 @section('content')
-<style>
-    td.details-control {
-        background: url("{{ asset('img/details_open.png')}}") no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url("{{ asset('img/details_close.png')}}") no-repeat center center;
-    }
-</style>
 <div class="container-fluid">
-    <div class="row mt-4 border-bottom mb-4">
-        <div class="col-md-6">
-            <h5>LKPJ</h3>
+    <div class="card mt-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>LKPJ</h3>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nama perangkat daerah</th>
-                    <th>Nama alias perangkat daerah</th>
-                    <th>Status file</th>
-                    <!-- <th>Upload file terbaru</th> -->
-                    <th class="d-flex justify-content-end">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="card-body">
+            <table id="data-lkpj" class="table dt-responsive nowrap">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nama perangkat daerah</th>
+                        <th>Nama alias perangkat daerah</th>
+                        <th>Status file Dikirim</th>
+                        <th>Status file Diterima</th>
+                        <!-- <th>Upload file terbaru</th> -->
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection
@@ -73,9 +69,18 @@
             })
         })
         var url = '{{ route("lkpj.data") }}';
-        var table = $('#dataTable').DataTable({
+        var table = $('#data-lkpj').DataTable({
             processing: true,
             serverSide: true,
+            language: {
+                paginate: {
+                    previous: "<i class='uil uil-angle-left'>",
+                    next: "<i class='uil uil-angle-right'>"
+                    }
+            },
+            drawCallback: function() {
+                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+            },
             ajax: url,
             columns: [
                 {
@@ -85,7 +90,8 @@
                 },
                 { data: "nama_opd"},
                 { data: "alias_opd"},
-                { data: "status_file"},
+                { data: "status_file_dikirim"},
+                { data: "status_file_diterima"},
                 // { data: "last_upload"},
                 { data: "aksi" },
             ],

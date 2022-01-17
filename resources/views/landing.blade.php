@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>PULAHTA</title>
+  <title>PULLAHTA</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -37,7 +37,7 @@
           <div class="masthead-content text-white py-5 py-md-0">
             <img src="{{ asset('img/logo-pemda.png') }}" style="width: 5rem;" class="mb-3">
             <h3 class="mb-3">Aplikasi <br />Pengumpulan Data</h3>
-            <p class="mb-5 text-justify">Tata kelola data yang baik menunjang kualitas pembangunan. Aplikasi ini hadir untuk mendu-kung tata kelola data di Kabupaten Ciamis dan sebagai perwujudan misi kelima yaitu, “mening-katkan tata kelola pemerintahan yang efektif dan efisien.”</p>
+            <p class="mb-5 text-justify">Tata kelola data yang baik menunjang kualitas pembangunan. Aplikasi ini hadir untuk mendukung tata kelola data di Kabupaten Ciamis dan sebagai perwujudan misi kelima yaitu, “meningkatkan tata kelola pemerintahan yang efektif dan efisien.”</p>
             <div class="input-group input-group-newsletter">
               <!-- <input type="email" class="form-control" placeholder="Enter email..." aria-label="Enter email..." aria-describedby="submit-button"> -->
                 <div class="input-group-append">
@@ -53,7 +53,7 @@
           <div class="masthead-content text-white py-5 py-md-0">
             <img src="{{ asset('img/logo-pemda.png') }}" style="width: 5rem;" class="mb-3">
             <h3 class="mb-3">Aplikasi <br />Pengumpulan Data</h3>
-            <p class="mb-5 text-justify">Tata kelola data yang baik menunjang kualitas pembangunan. Aplikasi ini hadir untuk mendu-kung tata kelola data di Kabupaten Ciamis dan sebagai perwujudan misi kelima yaitu, “mening-katkan tata kelola pemerintahan yang efektif dan efisien.”</p>
+            <p class="mb-5 text-justify">Tata kelola data yang baik menunjang kualitas pembangunan. Aplikasi ini hadir untuk mendukung tata kelola data di Kabupaten Ciamis dan sebagai perwujudan misi kelima yaitu, “meningkatkan tata kelola pemerintahan yang efektif dan efisien.”</p>
             <form class="form-signin" method="post" action="{{ route('prosess.login') }}">
                 @csrf
                 <div class="input-group input-group-newsletter">

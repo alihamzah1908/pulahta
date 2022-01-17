@@ -1,42 +1,37 @@
 @extends('admin.master')
 @section('content')
-<style>
-    td.details-control {
-        background: url("{{ asset('img/details_open.png')}}") no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url("{{ asset('img/details_close.png')}}") no-repeat center center;
-    }
-</style>
 <div class="container-fluid">
-    <div class="row mt-4 border-bottom mb-4">
-        <div class="col-md-6">
-            <h5>Data Perangkat Daerah</h3>
+    <div class="card mt-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Data Perangkat Daerah</h3>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    @if(Auth::user()->role == 'super admin')
+                        <a href="{{ route('opd.form') }}">
+                            <button class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
+                        </a>
+                    @endif
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 mb-4 d-flex justify-content-end">
-            @if(Auth::user()->role == 'super admin')
-                <a href="{{ route('opd.form') }}">
-                    <button class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
-                </a>
-            @endif
+        <div class="card-body">
+            <table class="table dt-responsive nowrap" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nama perangkat daerah</th>
+                        <th>Nama alias perangkat daerah</th>
+                        <th>Status file</th>
+                        <!-- <th>Status file (yang diterima)</th> -->
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nama perangkat daerah</th>
-                    <th>Nama alias perangkat daerah</th>
-                    <th>Status file</th>
-                    <!-- <th>Status file (yang diterima)</th> -->
-                    <th class="d-flex justify-content-end">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
     </div>
 </div>
 @endsection
@@ -144,6 +139,15 @@
         })
         var url = '{{ route("opd.data") }}';
         var table = $('#dataTable').DataTable({
+            language: {
+                paginate: {
+                    previous: "<i class='uil uil-angle-left'>",
+                    next: "<i class='uil uil-angle-right'>"
+                    }
+            },
+            drawCallback: function() {
+                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+            },
             processing: true,
             serverSide: true,
             ajax: url,

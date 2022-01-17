@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
 use DataTables;
+use Illuminate\Http\Request;
 
 class RkpdController extends Controller
 {
@@ -49,6 +49,14 @@ class RkpdController extends Controller
     {
         if (Auth::user()->role != 'super admin') {
             $data = \App\Models\Opd::where('id', Auth::user()->opd_parent)->get();
+        } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.ppm') {
+            $data = \App\Models\Opd::whereIn('id', [37, 38, 9, 12, 23, 22, 35, 33, 39, 36, 34, 10, 13, 16, 31, 19])->get();
+        } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.psda') {
+            $data = \App\Models\Opd::whereIn('id', [27, 28, 30, 29, 26, 24, 32])->get();
+        } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.infrawil') {
+            $data = \App\Models\Opd::whereIn('id', [18, 15, 14])
+                ->orWhere('nama_opd', 'LIKE', '%Kecamatan%')
+                ->get();
         } else {
             $data = \App\Models\Opd::all();
         }
@@ -63,11 +71,18 @@ class RkpdController extends Controller
             ->addColumn('total_parent', function ($val) {
                 return $val->get_uptd->count();
             })
-            ->addColumn('status_file', function ($val) {
-                if ($val->get_file_rkpd->count() > 0) {
+            ->addColumn('status_file_dikirim', function ($val) {
+                if ($val->get_file_rkpd_dikirim->count() > 0) {
                     return '<span class="badge badge-success">Tersedia</span>';
                 } else {
-                    return '<span class="badge badge-danger">Tidak Tersedia</span>';
+                    return '<span class="badge badge-danger">Belum Tersedia</span>';
+                }
+            })
+            ->addColumn('status_file_diterima', function ($val) {
+                if ($val->get_file_rkpd_diterima->count() > 0) {
+                    return '<span class="badge badge-success">Tersedia</span>';
+                } else {
+                    return '<span class="badge badge-danger">Belum Tersedia</span>';
                 }
             })
             ->addColumn('last_upload', function ($val) {
@@ -75,14 +90,16 @@ class RkpdController extends Controller
                 return $last_upload->created_at;
             })
             ->addColumn('aksi', function ($val) {
-                return '<div class="dropdown d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
+                return '<div class="dropdown ">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi
+                                <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></i>
+                            </button>
                             <div class="dropdown-menu" role="menu">
                                 <a class="dropdown-item" role="presentation" href=' . route('rkpd.file') . '?id=' . $val->id . '>Kelola File</a>
                             </div>
                         </div>';
             })
-            ->rawColumns(['aksi', 'status_file', 'nama_opd'])
+            ->rawColumns(['aksi', 'status_file_dikirim', 'status_file_diterima', 'nama_opd'])
             ->make(true);
     }
 }

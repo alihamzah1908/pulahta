@@ -160,10 +160,12 @@ class UserController extends Controller
                     return \App\Models\User::where('parent_admin', $val->id)->count();
                 })
                 ->addColumn('aksi', function ($val) {
+                    // <a class="dropdown-item add-staff" data-bind=\'' . $val->id . '\' role="presentation" href="javascript:void(0)" data-toggle="modal">Tambah Staff</a>
                     return '<div class="dropdown">
-                                    <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi</button>
+                                    <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Aksi 
+                                        <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></i>
+                                    </button>
                                     <div class="dropdown-menu" role="menu">
-                                        <a class="dropdown-item add-staff" data-bind=\'' . $val->id . '\' role="presentation" href="javascript:void(0)" data-toggle="modal">Tambah Staff</a>
                                         <a class="dropdown-item edit" data-bind=\'' . $val . '\' role="presentation" href="javascript:void(0)" data-toggle="modal">Edit</a>
                                         <a class="dropdown-item delete" data-bind="' . $val->id . '" role="presentation" href="javascript:void(0)">Hapus</a>
                                     </div>

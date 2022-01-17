@@ -15,11 +15,15 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('landing');
+    // return view('landing');
+    return view('maintenance');
 });
-Route::get('/', 'App\Http\Controllers\AuthController@login')->name('login');
-Route::get('/get_perangkat','\App\Http\Controllers\OpdController@get_perangkat')->name('data.perangkat');
+// Route::get('/landing', function () {
+//     return view('landing');
+// });
 Route::post('/prosess', 'App\Http\Controllers\AuthController@prosess')->name('prosess.login');
+Route::get('/v2', 'App\Http\Controllers\AuthController@login')->name('login');
+Route::get('/get_perangkat','\App\Http\Controllers\OpdController@get_perangkat')->name('data.perangkat');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -75,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/user/parent_datatable', 'App\Http\Controllers\UserController@parent_datatable')->name('user_parent.datatable');
     Route::get('/opdfile/get_download', 'App\Http\Controllers\OpdFileController@get_download')->name('opdfile.download');
     Route::get('/opdfile/download_all', 'App\Http\Controllers\OpdFileController@download_all')->name('opdfile.download_all');
-   
+
     Route::post('/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
     Route::post('/dataset/upload_file', 'App\Http\Controllers\OpdFileController@upload_file')->name('upload.file');
     Route::post('/dataset/upload_metadata', 'App\Http\Controllers\OpdFileController@upload_metadata')->name('upload.metadata');
@@ -119,10 +123,14 @@ Route::group(['middleware' => 'auth'], function () {
         }
         return view('admin.lkpj.file');
     })->name('lkpj.file');
+    Route::get('/data_informasi/lkpj/evidence', function(){
+        return view('admin.lkpj.evidence');
+    })->name('lkpj.evidence');
     Route::get('/data_informasi/lkpj/tambah_file', function () {
         return view('admin.lkpj.form');
     })->name('lkpj.form');
     Route::post('/data_informasi/lkpj/store', 'App\Http\Controllers\LkpjController@store')->name('lkpj.store');
+    Route::post('/data_informasi/lkpj/evidence/store', 'App\Http\Controllers\LkpjController@upload_evidence')->name('evidence.store');
 
     // Sektoral
     Route::get('/data_informasi/sektoral', 'App\Http\Controllers\SektoralController@index')->name('sektoral');
@@ -139,4 +147,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('admin.sektoral.form');
     })->name('sektoral.form');
     Route::post('/data_informasi/sektoral/store', 'App\Http\Controllers\SektoralController@store')->name('sektoral.store');
+
+    // route daftar pengirim file
+    Route::get('/get_pengirim','App\Http\Controllers\OpdFileController@get_opd_mengirim')->name('opd.mengirim');
 });

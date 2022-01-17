@@ -5,19 +5,17 @@
         @php 
         $opd = \App\Models\Opd::find(request()->id);
         @endphp
-        <h5 class="mt-4 mb-3">{{ request()->type ? 'Edit User Perangkat Daerah' : 'Edit Perangkat Daerah' }}</h5>
         <ol class="breadcrumb mb-4 mt-4">
-            <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
-            <li class="breadcrumb-item active">{{ request()->type ? 'Edit User Perangkat Daerah' : 'Edit Perangkat Daerah' }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat daerah</a></li>
+            <li class="breadcrumb-item active">{{ request()->type ? 'Edit perangkat daerah' : 'Edit perangkat daerah' }}</li>
         </ol>
     @else 
         @php 
         $opd = '';
         @endphp
-        <h5 class="mt-4 mb-3">{{ request()->type ? 'Tambah User Perangkat Daerah' : 'Tambah Perangkat Daerah' }}</h5>
         <ol class="breadcrumb mb-4 mt-4">
-            <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
-            <li class="breadcrumb-item active">{{ request()->type ? 'Tambah User Perangkat Daerah' : 'Tambah Perangkat Daerah' }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat daerah</a></li>
+            <li class="breadcrumb-item active">{{ request()->type ? 'Tambah perangkat daerah' : 'Tambah perangkat daerah' }}</li>
         </ol>
     @endif
     @if(request()->type == 'staff')
@@ -27,7 +25,7 @@
     @endif
     <div class="card">
         <div class="card-header card-header-primary">
-            <h5 class="card-title">{{ request()->id ? 'Edit Data ' : 'Tambah Data '}} </h5>
+            <h5 class="card-title">{{ request()->id ? 'Edit perangkat daerah ' : 'Tambah perangkat daerah '}} </h5>
             <!-- <p class="card-category">Complete your profile</p> -->
         </div>
         <div class="card-body">

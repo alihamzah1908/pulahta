@@ -1,16 +1,7 @@
 @extends('admin.master')
 @section('content')
-<style>
-    td.details-control {
-        background: url("{{ asset('img/details_open.png')}}") no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url("{{ asset('img/details_close.png')}}") no-repeat center center;
-    }
-</style>
 <div class="container-fluid">
-    <div class="row mt-4 border-bottom mb-4">
+    <div class="row mt-4 mb-4">
         <div class="col-md-6">
             <h5>Data users</h5>
         </div>
@@ -22,19 +13,21 @@
             @endif
         </div>
     </div>
-    <div class="table-responsive table-striped">
-        <table class="table" id="dataTable">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nama User</th>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div class="card">
+        <div class="card-body">
+            <table class="table dt-responsive nowrap" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nama User</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
     <!-- Demo content -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

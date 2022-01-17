@@ -1,9 +1,9 @@
 @extends('admin.master')
 @section('content')
 <div class="container-fluid">
-    <h5 class="mt-4 mb-3">Upload file Sektoral</h5>
     <ol class="breadcrumb mb-4 mt-4">
-        <li class="breadcrumb-item"><a href="{{ route('rkpd') }}">Sektoral</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('sektoral') }}">Sektoral</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('sektoral.file') }}?id={{ request()->id }}">Dataset</a></li>
         <li class="breadcrumb-item active">Upload file Sektoral</li>
     </ol>
     <div class="card">
@@ -43,7 +43,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="bmd-label-floating"><strong>File </strong></label>
-                            <input type="file" class="form-control" name="file" required>
+                            <input type="file" id="file" class="form-control" name="file" required>
                         </div>
                     </div>
                 </div>
@@ -101,3 +101,18 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('body').on('change', '#file', function(){
+            var imgbytes = this.files[0].size;
+            var imgkbytes = Math.round(parseInt(imgbytes) / 1024);
+            if(imgkbytes > 5000){
+                $("#file").val('')
+                alert("Ukuran file terlalu besar, mohon upload file dengan ukuran tidak lebih dari 5Mb")
+                return false;
+            }
+        })
+    })
+</script>
+@endpush

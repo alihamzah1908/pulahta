@@ -1,14 +1,14 @@
 @extends('admin.master')
 @section('content')
 <div class="container-fluid">
-    <h5 class="mt-4 mb-3">Form Upload File</h5>
     <ol class="breadcrumb mb-4 mt-4">
         <li class="breadcrumb-item"><a href="{{ route('opd.index') }}">Perangkat Daerah</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('opd.file') }}?id={{ request()->id }}">Dataset</a></li>
         <li class="breadcrumb-item active">Upload File</li>
     </ol>
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Upload File</h5>
+            <h5 class="card-title">Upload File Perangkat Daerah</h5>
             <!-- <p class="card-category">Complete your profile</p> -->
         </div>
         <div class="card-body">
@@ -57,7 +57,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="bmd-label-floating"><strong>File </strong></label>
-                            <input type="file" class="form-control" name="file" required>
+                            <input type="file" id="file" class="form-control" name="file" required>
                         </div>
                     </div>
                 </div>
@@ -115,3 +115,18 @@
     
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('body').on('change', '#file', function(){
+            var imgbytes = this.files[0].size;
+            var imgkbytes = Math.round(parseInt(imgbytes) / 1024);
+            if(imgkbytes > 5000){
+                $("#file").val('')
+                alert("Ukuran file terlalu besar, mohon upload file dengan ukuran tidak lebih dari 5Mb")
+                return false;
+            }
+        })
+    })
+</script>
+@endpush

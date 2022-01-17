@@ -62,20 +62,22 @@
         @endif
     </div>
 </div>
-<div class="table-responsive">
-    <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>Jumlah Data</th>
-                <th>Status</th>
-                <th>Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-body">
+        <table class="table dt-responsive nowrap" id="dataTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Jumlah Data</th>
+                    <th>Status</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
     </div>
 @endsection 
@@ -94,7 +96,7 @@
                 { data: "status"},
                 { data: "keterangan" },
             ],
-            "order": [[0, 'desc']],
+            "order": [[0, 'asc']],
              createdRow: function (row, data, index) {
                 var td = $(row).find("td:first");
                 if(data.total_parent == 0){

@@ -10,26 +10,31 @@
     }
 </style>
 <div class="container-fluid">
-    <div class="row mt-4 border-bottom mb-4">
-        <div class="col-md-6">
-            <h5>Sektoral</h3>
+    <div class="card mt-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>DATA SEKTORAL</h3>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nama perangkat daerah</th>
-                    <th>Nama alias perangkat daerah</th>
-                    <th>Status file</th>
-                    <!-- <th>Upload file terbaru</th> -->
-                    <th class="d-flex justify-content-end">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="card-body">
+            <table class="table dt-responsive nowrap" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nama perangkat daerah</th>
+                        <th>Nama alias perangkat daerah</th>
+                        <th>Status file Dikirim</th>
+                        <th>Status file Diterima</th>
+                        <!-- <th>Upload file terbaru</th> -->
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection
@@ -74,6 +79,15 @@
         })
         var url = '{{ route("sektoral.data") }}';
         var table = $('#dataTable').DataTable({
+            language: {
+                paginate: {
+                    previous: "<i class='uil uil-angle-left'>",
+                    next: "<i class='uil uil-angle-right'>"
+                    }
+            },
+            drawCallback: function() {
+                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+            },
             processing: true,
             serverSide: true,
             ajax: url,
@@ -85,7 +99,8 @@
                 },
                 { data: "nama_opd"},
                 { data: "alias_opd"},
-                { data: "status_file"},
+                { data: "status_file_dikirim"},
+                { data: "status_file_diterima"},
                 // { data: "last_upload"},
                 { data: "aksi" },
             ],
