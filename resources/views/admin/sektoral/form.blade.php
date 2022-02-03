@@ -25,6 +25,18 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
+                            <label class="bmd-label-floating"><strong>Jenis File</strong></label>
+                            <select name="jenis_file" class="form-control" required="true">
+                                <option value="">Pilih</option>
+                                <option value="Sektoral">Sektoral</option>
+                                <option value="dda">Daerah Dalam Angka (DDA)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
                             <input type="hidden" name="nama_opd" value="{{ request()->id }}" />
                             <label class="bmd-label-floating"><strong>Nama OPD</strong></label>
                             <select name="nama_opd" class="form-control" disabled>

@@ -86,7 +86,7 @@
                                     @endif
                                     <a class="dropdown-item" role="presentation" href="{{ route('lkpj.evidence') }}?id={{ $val->id }}">Evidence</a>
                                     <a class="dropdown-item" role="presentation" href="{{ route('opdfile.download') }}?id={{ $val->id}}&file={{ $val->file }}">Download</a>
-                                    @if($val->status_file == 'asli' || Auth::user()->role == 'super admin')
+                                    @if(Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->username != 'bidang.litbang' && Auth::user()->role == 'super admin')
                                     <a class="dropdown-item delete" role="presentation" href="javascript:void(0)" data-bind="{{ $val->id }}" data-file="{{ $val->file }}">Delete</a>
                                     @endif
                                 </div>

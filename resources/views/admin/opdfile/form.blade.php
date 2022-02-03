@@ -31,6 +31,7 @@
                                 <option value="rkpd">RKPD</option>
                                 <option value="lkpj">LKPJ</option>
                                 <option value="Sektoral">Sektoral</option>
+                                <option value="dda">Daerah Dalam Angka (DDA)</option>
                                 <option value="Lainya">Lainya</option>
                             </select>
                         </div>

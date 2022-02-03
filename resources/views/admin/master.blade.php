@@ -229,7 +229,7 @@
                                 </ul>
                             </li>
                             <li>
-                                @if(Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil')
+                                @if(Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->username != 'bidang.litbang')
                                 <a href="{{ route('sektoral') }}">
                                     <i data-feather="file-text"></i>
                                     <span> Data Sektoral </span>
@@ -237,14 +237,14 @@
                                 @endif
                             </li>
                             <li>
-                                @if(Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->role == 'super admin')
+                                @if(Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->username != 'bidang.litbang' && Auth::user()->role == 'super admin')
                                 <a href="{{ route('opd.index') }}">
                                     <i data-feather="file-text"></i>
                                     <span> Perangkat Daerah </span>
                                 </a>
                                 @endif
                             </li>
-                            @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil')
+                            @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->username != 'bidang.litbang')
                             <li class="menu-title">USER</li>
                             <li>
                                 <a href="{{ route('user.index') }}">
@@ -253,7 +253,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil')
+                            @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'datainformasi' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda' && Auth::user()->username != 'bidang.infrawil' && Auth::user()->username != 'bidang.litbang')
                             <li>
                                 <a href="{{ route('api.index') }}">
                                     <i data-feather="settings" class="icon-dual"></i>

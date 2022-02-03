@@ -133,14 +133,16 @@ class LkpjController extends Controller
         if (Auth::user()->role != 'super admin') {
             $data = \App\Models\Opd::where('id', Auth::user()->opd_parent)->get();
         } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.ppm') {
-            $data = \App\Models\Opd::whereIn('id', [37, 38, 9, 12, 23, 22, 35, 33, 39, 36, 34, 10, 13, 16, 31, 19])->get();
+            $data = \App\Models\Opd::whereIn('id', [37, 12, 22, 35, 33, 39, 34, 10, 16, 31, 19])->get();
         } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.psda') {
             $data = \App\Models\Opd::whereIn('id', [27, 28, 30, 29, 26, 24, 32])->get();
         } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.infrawil') {
             $data = \App\Models\Opd::whereIn('id', [18, 15, 14])
                 ->orWhere('nama_opd', 'LIKE', '%Kecamatan%')
                 ->get();
-        } else {
+        } else if (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.litbang') {
+            $data = \App\Models\Opd::whereIn('id', [36, 9, 13, 20, 23, 38])->get();
+        }else {
             $data = \App\Models\Opd::all();
         }
         return Datatables::of($data)

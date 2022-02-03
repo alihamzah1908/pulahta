@@ -18,9 +18,7 @@ Route::get('/', function () {
     // return view('landing');
     return view('maintenance');
 });
-// Route::get('/landing', function () {
-//     return view('landing');
-// });
+Route::get('/download/all', 'App\Http\Controllers\OpdFileController@download_all');
 Route::post('/prosess', 'App\Http\Controllers\AuthController@prosess')->name('prosess.login');
 Route::get('/v2', 'App\Http\Controllers\AuthController@login')->name('login');
 Route::get('/get_perangkat','\App\Http\Controllers\OpdController@get_perangkat')->name('data.perangkat');

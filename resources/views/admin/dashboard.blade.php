@@ -7,6 +7,7 @@
                 <h4 class="mb-1 mt-0">Dashboard Summary</h4>
             </div>
         </div>
+        <!-- <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/92744aa2-a1ee-4876-a837-e4d7dd752e50/page/GaAfC" frameborder="0" style="border:0" allowfullscreen></iframe> -->
         <!-- content -->
         <div class="row">
             <div class="col-md-6 col-xl-3">
@@ -141,7 +142,7 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.psda')
+        @if(Auth::user()->role == 'super admin' && Auth::user()->username != 'bidang.ppm' && Auth::user()->username != 'bidang.litbang')
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
@@ -158,8 +159,13 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-9">
-                                <h5>Daftar nama opd yang sudah mengirimkan file</h5>
+                            <div class="col-md-7 border">
+                                <h5>Daftar nama OPD yang sudah mengirimkan file</h5>
+                            </div>
+                            <div class="col-md-5 d-flex justify-content-end">  
+                                <a href="{{ url('/download/all') }}">
+                                    <button class="btn-sm btn-success">download all file</button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -173,11 +179,27 @@
                             </thead>
                             <tbody>
                                 @php 
-                                $filediterima = \App\Models\OpdFile::groupBy('jenis_file','opd_id')->get();
+                                $filediterima = \App\Models\OpdFile::groupBy('jenis_file','opd_id')
+                                    ->whereNotIn('created_by', array(1, 4, 46, 74, 75, 76, 77))
+                                    ->get();
                                 @endphp 
                                 @foreach($filediterima as $val)
                                     <tr>
-                                        <td>{{ $val->get_opd->nama_opd }}</td>
+                                        <td>
+                                            @if($val->jenis_file == 'lkpj')
+                                                <a href="{{ route('lkpj.file') }}?id={{ $val->opd_id }}">
+                                                    {{ $val->get_opd->nama_opd }}
+                                                </a>
+                                            @elseif($val->jenis_file == 'rkpd')
+                                                <a href="{{ route('rkpd.file') }}?id={{ $val->opd_id }}">
+                                                    {{ $val->get_opd->nama_opd }}
+                                                </a>
+                                            @else 
+                                                <a href="{{ route('sektoral.file') }}?id={{ $val->opd_id }}">
+                                                    {{ $val->get_opd->nama_opd }}
+                                                </a>
+                                            @endif
+                                        </td>
                                         <td>{{ $val->jenis_file }}</td>
                                     </tr>
                                 @endforeach

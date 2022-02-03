@@ -8,6 +8,7 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Zip;
+use ZipArchive;
 
 class OpdFileController extends Controller
 {
@@ -256,14 +257,29 @@ class OpdFileController extends Controller
 
     public function download_all(Request $request)
     {
-        $zip = Zip::create('file.zip');
-        return $zip;
-        // $files = \App\Models\OpdFile::where('opd_id', $request["id"])->get();
-        // $arr = [];
-        // foreach($files as $key => $val){
-        //     $arrx[$key] = public_path('/uploads').$val->file;
+        $zip = new ZipArchive;
+        $fileName = 'pullahta_file.zip';
+        if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE)
+        {
+            $files = File::files(public_path('uploads'));
+            foreach ($files as $key => $value) {
+                $relativeNameInZipFile = basename($value);
+                $zip->addFile($value, $relativeNameInZipFile);
+            }
+            $zip->close();
+        }
+        return response()->download(public_path($fileName));
+        // $zip = new ZipArchive;
+        // $fileName = 'myNewFile.zip';
+        // if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE){
+        //     $files = \App\Models\OpdFile::where('opd_id', $request["id"])->get();
+        //     $arr = [];
+        //     foreach($files as $key => $val){
+        //         $arrx[$key] = public_path('/uploads').$val->file;
+        //     }
+        //     return response()->download(public_path($fileName));
         // }
-        // return ZipFacade::create($request["id"] .'-data-'. $request["nama_opd"] .'.zip', $arr);
+        
     }
 
     public function notifikasi(Request $request)
@@ -299,7 +315,7 @@ class OpdFileController extends Controller
                 ->where('a.is_read', '0')
                 ->where('a.created_by', '!=', Auth::user()->id)
                 ->whereIn('d.jenis_file', ['lkpj', 'rkpd'])
-                ->whereIn('c.id', [37, 38, 9, 12, 23, 22, 35, 33, 39, 36, 34, 10, 13, 16, 31, 19])
+                ->whereIn('c.id', [37, 12, 22, 35, 33, 39, 34, 10, 16, 31, 19])
                 ->orderBy('a.id', 'desc')
                 ->get();
         } elseif (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.psda') {
@@ -325,6 +341,18 @@ class OpdFileController extends Controller
                 ->whereIn('d.jenis_file', ['lkpj', 'rkpd'])
                 ->whereIn('c.id', [18, 15, 14])
                 ->orWhere('nama_opd', 'LIKE', '%Kecamatan%')
+                ->orderBy('a.id', 'desc')
+                ->get();
+        } elseif (Auth::user()->role == 'super admin' && Auth::user()->username == 'bidang.litbang') {
+            $notif = DB::table('notifikasi as a')
+                ->select('a.id as id_notifikasi', 'a.opd_id', 'b.*', 'c.*', 'd.jenis_file')
+                ->join('users as b', 'a.created_by', 'b.id')
+                ->join('opd as c', 'a.opd_id', 'c.id')
+                ->join('opd_file as d', 'a.opd_file_id', 'd.id')
+                ->where('a.is_read', '0')
+                ->where('a.created_by', '!=', Auth::user()->id)
+                ->whereIn('d.jenis_file', ['lkpj', 'rkpd'])
+                ->whereIn('c.id', [36, 9, 13, 20, 23, 38])
                 ->orderBy('a.id', 'desc')
                 ->get();
         } elseif (Auth::user()->role == 'super admin') {

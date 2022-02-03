@@ -91,6 +91,9 @@
             processing: true,
             serverSide: true,
             ajax: url,
+            data: {
+                "data": '{{ request()->data }}'
+            },
             columns: [
                 {
                     "orderable":  false,
