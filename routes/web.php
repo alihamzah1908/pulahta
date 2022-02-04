@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,16 +20,17 @@ Route::get('/', function () {
     return view('maintenance');
 });
 Route::get('/download/all', 'App\Http\Controllers\OpdFileController@download_all');
+Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::post('/prosess', 'App\Http\Controllers\AuthController@prosess')->name('prosess.login');
 Route::get('/v2', 'App\Http\Controllers\AuthController@login')->name('login');
-Route::get('/get_perangkat','\App\Http\Controllers\OpdController@get_perangkat')->name('data.perangkat');
+Route::get('/get_perangkat', '\App\Http\Controllers\OpdController@get_perangkat')->name('data.perangkat');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
     Route::get('/admin/opd/file', function (Request $request) {
         // dd(request()->opd_file_id);
-        if(request()->opd_file_id){
+        if (request()->opd_file_id) {
             $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
             $notif->is_read = 1;
             $notif->save();
@@ -44,29 +46,29 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/opd/uptd', function () {
         return view('admin.opd.uptd');
     })->name('opd.uptd');
-    Route::get('/dataset', function(){
+    Route::get('/dataset', function () {
         return view('frontend.dataset');
     })->name('dataset');
-    Route::get('/dataset/detail', function(){
+    Route::get('/dataset/detail', function () {
         return view('frontend.dataset_detail');
     })->name('dataset.detail');
-    Route::get('/dataset/upload', function(){
+    Route::get('/dataset/upload', function () {
         return view('frontend.upload_file_opd');
     })->name('dataset.upload');
-    Route::get('/dataset/statistik', function(){
+    Route::get('/dataset/statistik', function () {
         return view('frontend.statistik');
     })->name('statistik');
-    Route::get('/user/ubah_password', function(){
+    Route::get('/user/ubah_password', function () {
         return view('user.ubah_password');
     })->name('ubah.password');
-    Route::get('/admin/opd/metadata', function(){
+    Route::get('/admin/opd/metadata', function () {
         return view('admin.opdfile.metadata');
     })->name('file.metadata');
-    Route::post('/user/proses_ubah_password','App\Http\Controllers\UserController@proses_ubah_password')->name('proses.ubah_password');
+    Route::post('/user/proses_ubah_password', 'App\Http\Controllers\UserController@proses_ubah_password')->name('proses.ubah_password');
     Route::get('/admin/opd/datatable_opd', 'App\Http\Controllers\OpdController@datatable')->name('opd.data');
     Route::get('/admin/opd/datatable_opd_parent', 'App\Http\Controllers\OpdController@datatable_opd_parent')->name('opd_parent.data');
     Route::get('/admin/opd/get_uptd', 'App\Http\Controllers\OpdController@get_uptd')->name('data.uptd');
-    Route::delete('/admin/opd/hapus_opd','App\Http\Controllers\OpdController@hapus_opd')->name('uptd.delete_data');
+    Route::delete('/admin/opd/hapus_opd', 'App\Http\Controllers\OpdController@hapus_opd')->name('uptd.delete_data');
     Route::resource('/admin/opd', 'App\Http\Controllers\OpdController');
     Route::resource('/admin/opdfile', 'App\Http\Controllers\OpdFileController');
     Route::get('/admin/user/index', 'App\Http\Controllers\UserController@index')->name('user.index');
@@ -82,8 +84,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dataset/upload_file', 'App\Http\Controllers\OpdFileController@upload_file')->name('upload.file');
     Route::post('/dataset/upload_metadata', 'App\Http\Controllers\OpdFileController@upload_metadata')->name('upload.metadata');
     Route::post('/dataset/update_status', 'App\Http\Controllers\OpdFileController@update_status')->name('file.update_status');
-    Route::delete('/admin/opd/delete','App\Http\Controllers\OpdFileController@destroy')->name('opd.delete');
-    Route::delete('/admin/opd_file/delete','App\Http\Controllers\OpdFileController@file_delete')->name('opd_file.delete');
+    Route::delete('/admin/opd/delete', 'App\Http\Controllers\OpdFileController@destroy')->name('opd.delete');
+    Route::delete('/admin/opd_file/delete', 'App\Http\Controllers\OpdFileController@file_delete')->name('opd_file.delete');
 
     Route::get('/admin/api', 'App\Http\Controllers\CkanController@index')->name('api.index');
     Route::get('/admin/api/sinkronisasi', 'App\Http\Controllers\CkanController@sinkronisasi')->name('api.sikronisasi');
@@ -97,7 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/data_informasi/rkpd/datatable', 'App\Http\Controllers\RkpdController@datatable')->name('rkpd.data');
     Route::get('/data_informasi/rkpd/file', function (Request $request) {
         // dd(request()->opd_file_id);
-        if(request()->opd_file_id){
+        if (request()->opd_file_id) {
             $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
             $notif->is_read = 1;
             $notif->save();
@@ -114,14 +116,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/data_informasi/lkpj/datatable', 'App\Http\Controllers\LkpjController@datatable')->name('lkpj.data');
     Route::get('/data_informasi/lkpj/file', function (Request $request) {
         // dd(request()->opd_file_id);
-        if(request()->opd_file_id){
+        if (request()->opd_file_id) {
             $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
             $notif->is_read = 1;
             $notif->save();
         }
         return view('admin.lkpj.file');
     })->name('lkpj.file');
-    Route::get('/data_informasi/lkpj/evidence', function(){
+    Route::get('/data_informasi/lkpj/evidence', function () {
         return view('admin.lkpj.evidence');
     })->name('lkpj.evidence');
     Route::get('/data_informasi/lkpj/tambah_file', function () {
@@ -134,7 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/data_informasi/sektoral', 'App\Http\Controllers\SektoralController@index')->name('sektoral');
     Route::get('/data_informasi/sektoral/datatable', 'App\Http\Controllers\SektoralController@datatable')->name('sektoral.data');
     Route::get('/data_informasi/sektoral/file', function (Request $request) {
-        if(request()->opd_file_id){
+        if (request()->opd_file_id) {
             $notif = \App\Models\Notifikasi::findOrFail(request()->opd_file_id);
             $notif->is_read = 1;
             $notif->save();
@@ -147,5 +149,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/data_informasi/sektoral/store', 'App\Http\Controllers\SektoralController@store')->name('sektoral.store');
 
     // route daftar pengirim file
-    Route::get('/get_pengirim','App\Http\Controllers\OpdFileController@get_opd_mengirim')->name('opd.mengirim');
+    Route::get('/get_pengirim', 'App\Http\Controllers\OpdFileController@get_opd_mengirim')->name('opd.mengirim');
 });
