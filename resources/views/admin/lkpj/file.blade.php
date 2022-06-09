@@ -41,7 +41,7 @@
             </thead>
             <tbody>
                 @php 
-                $opd = \App\Models\OpdFile::where('opd_id', request()->id)
+                $opd = \App\Models\OpdFile::whereNull('deleted_at')->where('opd_id', request()->id)
                         ->where('jenis_file','lkpj')
                         ->orderBy('id','desc')
                         ->get();

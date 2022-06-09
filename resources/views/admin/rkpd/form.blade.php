@@ -51,6 +51,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="bmd-label-floating"><strong>Tahun </strong></label> &nbsp; <br />
+                            <input type="checkbox" name="tahun" name="checkbox" value="2023"> &nbsp; 2023
+                        </div>
+                    </div>
+                </div>
                 @if(Auth::user()->role == 'Admin' && request()->type != 'staff')
                 <div class="row">
                     @php 

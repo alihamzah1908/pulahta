@@ -41,7 +41,8 @@
                 </thead>
                 <tbody>
                     @php 
-                    $opd = \App\Models\OpdFile::where('opd_id', request()->id)
+                    $opd = \App\Models\OpdFile::whereNull('deleted_at')
+                            ->where('opd_id', request()->id)
                             ->whereIn('jenis_file',['sektoral','dda'])
                             ->orderBy('id','desc')
                             ->get();

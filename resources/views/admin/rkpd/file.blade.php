@@ -41,10 +41,18 @@
                 </thead>
                 <tbody>
                     @php 
-                    $opd = \App\Models\OpdFile::where('opd_id', request()->id)
+                    if(request()->tahun){
+                        $opd = \App\Models\OpdFile::whereNull('deleted_at')->where('opd_id', request()->id)
+                            ->where('jenis_file','rkpd')
+                            ->where('tahun', request()->tahun)
+                            ->orderBy('id','desc')
+                            ->get();
+                    }else{
+                        $opd = \App\Models\OpdFile::whereNull('deleted_at')->where('opd_id', request()->id)
                             ->where('jenis_file','rkpd')
                             ->orderBy('id','desc')
                             ->get();
+                    }
                     @endphp
                     @foreach($opd as $val)
                         <tr>

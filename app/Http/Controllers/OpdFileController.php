@@ -227,14 +227,20 @@ class OpdFileController extends Controller
     {
         $opd = \App\Models\OpdFile::find($request["id"]);
         if ($opd) {
-            $path = public_path() . '/uploads/' . $request["file"];
-            $file_exists = File::exists($path);
-            if ($file_exists == false) {
-                return response()->json(["delete" => 'failed']);
-            } else {unlink(public_path() . '/uploads/' . $request["file"]);
-                $opd->delete();
-                return response()->json(["delete" => 'failed']);
-            }
+            // $path = public_path() . '/uploads/' . $request["file"];
+            // $file_exists = File::exists($path);
+            // if ($file_exists == false) {
+            //     return response()->json(["delete" => 'failed']);
+            // } else {unlink(public_path() . '/uploads/' . $request["file"]);
+            //     $opd->delete();
+            //     return response()->json(["delete" => 'failed']);
+            // }
+
+            $file = \App\Models\OpdFile::find($opd->id);
+            $file->deleted_at = date('Y-m-d H:i:s');
+            $file->deleted_by = Auth::user()->id;
+            $file->save();
+            return response()->json(["delete" => 'success']);
         } else {
             return response()->json(["delete" => 'failed']);
         }

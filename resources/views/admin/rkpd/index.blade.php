@@ -4,8 +4,14 @@
     <div class="card mt-3">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <h5>RKPD</h3>
+                </div>
+                <div class="col-md-3 d-flex justify-content-end">
+                    <select id="cari-tahun" class="form-control">
+                        <option value="">Pilih Tahun</option>
+                        <option value="2023" {{ request()->tahun == 2023 ? ' selected': '' }}>2023</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -31,8 +37,11 @@
 @endsection
 @push('scripts')
 <script>
-    $(document).ready(function(){
-        $('body').on('click', '.delete', function(){
+    $(document).ready(function() {
+        $('body').on('change', '#cari-tahun', function() {
+            location.href = '{{ route("rkpd") }}?tahun=' + $(this).val()
+        })
+        $('body').on('click', '.delete', function() {
             Swal.fire({
                 title: 'Apakah anda yakin?',
                 text: "Anda tidak akan dapat mengembalikan ini!",
@@ -52,9 +61,9 @@
                         url: '{{ route("opd.delete") }}',
                         data: {
                             "id": id,
-                            "_token" : token,
+                            "_token": token,
                         }
-                    }).done(function(){
+                    }).done(function() {
                         Swal.fire(
                             'Terhapus!',
                             'Data sudah terhapus.',
@@ -74,28 +83,46 @@
                 paginate: {
                     previous: "<i class='uil uil-angle-left'>",
                     next: "<i class='uil uil-angle-right'>"
-                    }
+                }
             },
             drawCallback: function() {
                 $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
             },
             processing: true,
             serverSide: true,
-            ajax: url,
-            columns: [
-                {
-                    "orderable":  false,
+            ajax: {
+                'url': url,
+                'method': 'GET',
+                'dataType': 'json',
+                'data': {
+                    'tahun': '{{ request()->tahun }}'
+                },
+            },
+            columns: [{
+                    "orderable": false,
                     "data": null,
                     "defaultContent": ''
                 },
-                { data: "nama_opd"},
-                { data: "alias_opd"},
-                { data: "status_file_dikirim"},
-                { data: "status_file_diterima"},
+                {
+                    data: "nama_opd"
+                },
+                {
+                    data: "alias_opd"
+                },
+                {
+                    data: "status_file_dikirim"
+                },
+                {
+                    data: "status_file_diterima"
+                },
                 // { data: "last_upload"},
-                { data: "aksi" },
+                {
+                    data: "aksi"
+                },
             ],
-            "order": [[3, 'desc']],
+            "order": [
+                [3, 'desc']
+            ],
             "pageLength": 25,
         });
     })
